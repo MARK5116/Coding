@@ -1,6 +1,6 @@
 # hive
 
-## 常用的查找命令
+## 常用命令
 
 **查看分区**
 
@@ -8,7 +8,21 @@
 hive> show partitions table_name; 
 ```
 
-## 常用的hiveQL语言
+**修改表**
+
+```hive
+hive> ALTER TABLE table_name SET TBLPROPERTIES('comment' = '这是表注释!');
+```
+
+**修改字段**
+
+```hive
+hive> ALTER TABLE table_name CHANGE COLUMN muid muid_new STRING COMMENT '这里是列注释!'; 
+```
+
+
+
+## 常用的hiveQL函数
 
 **解析json字符串**
 
