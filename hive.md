@@ -54,6 +54,12 @@ CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END，
 --hive> Select case 100 when 50 then 'tom' when 100 then 'mary' else 'tim' end from dual;
 --hive> select case when...
 
+--3.非空查找函数：COALESCE
+--语法: COALESCE(T v1, T v2, …)   返回值: T
+--说明:  返回参数中的第一个非空值；如果所有值都为NULL，那么返回NULL
+
+hive> select COALESCE(null,'100','50′) from dual;  --输出：100
+                      
 
 
 ```
