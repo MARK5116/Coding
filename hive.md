@@ -8,6 +8,20 @@
 hive> show partitions table_name; 
 ```
 
+**删除表**
+
+```hive
+hive> drop table if exists table_name;
+```
+
+**查看表的描述**
+
+```hive
+hive> DESCRIBE table_name;
+```
+
+
+
 **修改表**
 
 ```sql
