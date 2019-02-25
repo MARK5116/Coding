@@ -10,15 +10,57 @@ hive> show partitions table_name;
 
 **修改表**
 
-```hive
+```sql
 hive> ALTER TABLE table_name SET TBLPROPERTIES('comment' = '这是表注释!');
 ```
 
 **修改字段**
 
-```hive
+```sql
 hive> ALTER TABLE table_name CHANGE COLUMN muid muid_new STRING COMMENT '这里是列注释!'; 
 ```
+
+**修改字段注释**
+
+```sql
+hive> alter table table_name CHANGE COLUMN muid_old muid_new int comment '这里是列注释';
+```
+
+**把数据文件复制/移动到Hive表对应的地址**
+
+```sql
+hive> LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1,partcol2=val2 ...)]
+```
+
+描述：
+
+- filepath 可以是： 
+  相对路径，如project/data1
+  绝对路径，如/user/hive/project/data1
+  完整的URL，如hdfs://namenode:9000/user/hive/project/data1
+  目标可以是一个表或是一个分区。如果目标表是分区表，必须指定是要加载到哪个分区。
+- filepath 可以是一个文件，也可以是一个目录(会将目录下的所有文件都加载)。
+- 如果命令中带LOCAL，表示： 
+  load命令从本地文件系统中加载数据，可以是相对路径，也可以是绝对路径。对于本地文件系统，也可以使用完整的URL，如file:///user/hive/project/data1
+  load命令会根据指定的本地文件系统中的filepath复制文件到目标文件系统，然后再移到对应的表
+- 如果命令中没有LOCAL，表示从HDFS加载文件，filepath可以使用完整的URL方式，或者使用fs.default.name定义的值
+- 命令带OVERWRITE时加载数据之前会先清空目标表或分区中的内容，否则就是追加的方式。
+
+注：
+
+1、hive 中，Load data导入多出现一列null或者全部数据都是null。
+
+问题：*出现一列**null**原因：导入的文件编码问题，需要设置成**utf8**，（**如果改了编码，还是出现一列**null**，就把分隔符由**/t* *改成英文逗号**,**）*
+
+解决：导入的数据全部都是null，原因：createtable时需要指定，
+
+```sql
+row formate delimited
+fields terminated by ','
+Stored as textfile
+```
+
+
 
 
 
@@ -73,10 +115,13 @@ CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END，
 --说明:  返回参数中的第一个非空值；如果所有值都为NULL，那么返回NULL
 
 hive> select COALESCE(null,'100','50′) from dual;  --输出：100
-                      
-
-
 ```
 
+**字段合并**
 
+```sql
+--将两个字段合并成一个字段
+concat(a, '_', b)   --输出：a-b
+hive> select concat(a, '_', b) from tablename;
+```
 
