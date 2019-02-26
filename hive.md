@@ -20,8 +20,6 @@ hive> drop table if exists table_name;
 hive> DESCRIBE table_name;
 ```
 
-
-
 **修改表**
 
 ```sql
