@@ -38,6 +38,15 @@ hive> ALTER TABLE table_name CHANGE COLUMN muid muid_new STRING COMMENT '这里�
 hive> alter table table_name CHANGE COLUMN muid_old muid_new int comment '这里是列注释';
 ```
 
+**查询不同的值**
+
+```sql
+hive> select distinct 字段名 from table_name;
+hive> select count(distinct 字段名) from table_name;
+```
+
+
+
 **把数据文件复制/移动到Hive表对应的地址**
 
 ```sql
@@ -133,7 +142,43 @@ hive> select COALESCE(null,'100','50′) from dual;  --输出：100
 
 ```sql
 --将两个字段合并成一个字段
-concat(a, '_', b)   --输出：a-b
+concat(year, month, day) between '20181026' and '20181026'
+
 hive> select concat(a, '_', b) from tablename;
+```
+
+**关系运算**
+
+```sql
+--1.等值比较: =
+
+--2.不等值比较: <> 或者 !=
+
+--3.空值判断: IS NULL
+
+--4.非空判断: IS NOTNULL
+
+--5.LIKE比较: LIKE
+--注意：否定比较时候用NOT ALIKE B
+
+```
+
+**逻辑操作符**
+
+```sql
+--1.A AND B
+
+--2.A && B
+
+--3.A || B
+
+--4. ! A
+
+--5.A IN (val1, val2, ...)
+--若A与任意值相等则返回true。
+
+--6.A NOT IN (val1, val2, ...)
+
+--7.[NOT] EXISTS (subquery)
 ```
 
