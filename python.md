@@ -1,3 +1,74 @@
+# 常用技巧
+
+## 字符串
+
+### format()
+
+格式化字符串的函数 **str.format()**.
+
+基本语法是通过 **{}** 和 **:** 来代替以前的 **%** 。
+
+format 函数可以接受不限个参数，位置可以不按顺序。
+
+实例:
+
+```python
+# 不设置指定位置，按默认顺序 
+"{} {}".format("hello", "world")    
+#输出：'hello world'   
+
+#设置指定位置
+"{1} {0} {1}".format("hello", "world")
+#输出：'world hello world'
+```
+
+实例：
+
+```python
+citys = [23]
+params = {
+    'START_DATE': start_date.strftime('%Y%m%d'),
+    'END_DATE': end_date.strftime('%Y%m%d'),
+    'CITY_ID': ','.join([str(x) for x in citys]),
+}
+
+bubble_sql_template = '''
+  select
+    *
+  from bigdata_driver_ecosys_test.bubble_base
+  where concat(year, month, day) between '{START_DATE}' and '{END_DATE}'
+    and city_id in ({CITY_ID})
+'''
+bubble_sql = bubble_sql_template.format(**params)
+bubble_df = spark.sql(bubble_sql).cache()
+```
+
+
+
+### join()
+
+常用：
+
+'x'.join(y)，x可以是任意分割字符，y是列表或元组。以列表为例，可以将列表中的每一个元素两头的引号给去除，同时，元素与元素之间以字符‘x’作为分割标志，并且列表最外面的中括号也能去除掉。元组同理。
+
+举例：
+
+```python
+a_list=['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
+print(' '.join(a_list))
+#输出：monday tuesday wednesday thursday friday saturday sunday
+
+b_list = [1,2,3,4]
+print(' ',join(str(x) for x in b_list))
+#输出：1 2 3 4
+
+
+```
+
+
+
+
+
 # pandas
 
 ## DataFrame
