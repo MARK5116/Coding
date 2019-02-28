@@ -182,3 +182,43 @@ hive> select concat(a, '_', b) from tablename;
 --7.[NOT] EXISTS (subquery)
 ```
 
+**集合统计函数**
+
+```sql
+--1. 个数统计函数: count
+hive> select count(distinct t) from lxw_dual;
+
+--2. 总和统计函数: sum
+hive> select sum(distinct t) from lxw_dual;
+
+--3. 平均值统计函数: avg
+hive> select avg (distinct t) from lxw_dual;
+
+--4. 最小值统计函数: min
+hive> select min(t) from lxw_dual;
+
+--5. 最大值统计函数: max
+hive> select max(t) from lxw_dual;
+
+--6. 非空集合总体变量函数:var_pop
+
+--7. 非空集合样本变量函数:var_samp
+
+--8. 总体标准偏离函数:stddev_pop
+
+--9. 样本标准偏离函数:stddev_samp
+
+--10．中位数函数:percentile
+
+--11. 中位数函数:percentile
+hive> select percentile(score,<0.2,0.4>) from lxw_dual；取0.2，0.4位置的数据
+
+--12. 近似中位数函数:percentile_approx
+
+--13. 近似中位数函数:percentile_approx
+
+--14. 直方图:histogram_numeric
+hive> select histogram_numeric(100,5) from lxw_dual;
+[{"x":100.0,"y":1.0}]
+```
+

@@ -22,3 +22,8 @@ dat_2 = dat.drop_duplicates(['trace_id'])
 data_1 = data.drop_duplicates(['trace_id']).count()
 ```
 
+### Attributes and underlying data
+
+#### DataFrame.values
+
+功能：把Pandas中的dataframe转成numpy中的array。
