@@ -161,6 +161,8 @@ ps [options] [--help]
 # ps -ef //显示所有命令，连带命令行
 # ps -aux
 
+#显示spark的进程
+# ps aux | grep spark
 ```
 
 ### kill
@@ -198,3 +200,27 @@ kill [-s <信息名称或编号>][程序]　或　kill [-l <信息编号>]
 #kill -9 $(ps -ef | grep hnlinux) //方法一 过滤出hnlinux用户进程 
 #kill -u hnlinux //方法二
 ```
+
+### tar
+
+打包、压缩、解压文件。
+
+实例：
+
+```
+1.压缩文件 非打包
+# touch a.c       
+# tar -czvf test.tar.gz a.c   //压缩 a.c文件为test.tar.gz
+
+2.列出压缩文件内容
+# tar -tzvf test.tar.gz 
+-rw-r--r-- root/root     0 2010-05-24 16:51:59 a.c
+
+3.解压文件
+# tar -xzvf test.tar.gz 
+
+4.打包，不压缩
+tar -cvf test.tar test
+
+```
+
