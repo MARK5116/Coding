@@ -4,7 +4,7 @@
 
 说明：SimpleHTTPServer ——一个简单的HTTP服务器。
 
-#linux后台运行和关闭、查看后台任务
+# linux后台运行和关闭、查看后台任务
 
 fg、bg、jobs、&、nohup、ctrl+z、ctrl+c 命令
 
