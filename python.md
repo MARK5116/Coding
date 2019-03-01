@@ -67,7 +67,13 @@ print(' ',join(str(x) for x in b_list))
 
 
 
+# numpy
 
+## 常用函数
+
+### np.abs()
+
+功能：求绝对值。
 
 # pandas
 

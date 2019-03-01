@@ -115,6 +115,13 @@ data =
 --hive>select get_json_object(data, '$.store.fruit[0].weitht') from test;
 ```
 
+```sql
+hive> select coalesce(get_json_object(param['dynamic_price'], '${'$'}.600.noncarpool'), get_json_object(param['dynamic_price'],'${'$'}.600')) dynamic_price from table_name
+
+```
+
+
+
 **条件判断函数**
 
 `collect_list(name)`
@@ -240,5 +247,12 @@ hive> hive>   select unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss") from dua
 --转化UNIX时间戳到当前时区的时间格式
 hive> select from_unixtime(unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss"),'HH') as hh from dual;
 -- 输出：20111208
+```
+
+**数据类型转换**
+
+```sql
+--cast(name as int)
+--hive> select cast(param['pre_total_fee'] as double) pre_total_fee_kuai from table_name;
 ```
 
