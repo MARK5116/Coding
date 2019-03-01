@@ -99,6 +99,46 @@ data_1 = data.drop_duplicates(['trace_id']).count()
 
 功能：把Pandas中的dataframe转成numpy中的array。
 
+### Combining / joining / merging
+
+#### DataFrame.merge()
+
+```python
+result = pd.merge(dataframe1, dataframe2, how='left', on=['city_id','is_short'])
+```
+
+说明：1. Dataframe1和dataframe2为两个数据表。
+
+2. how为连接方式，
+3. on指定以哪些列连接。
+
+### Function application, GroupBy & Window
+
+#### DataFrame.groupby().agg()
+
+链接：https://www.cnblogs.com/lemonbit/p/6810972.html
+
+**简介**
+
+分组（group by）一般是指三个过程 
+- 分割（Splitting）将数据按照某个标准分组 
+- 应用（Applying）对每个分组分别使用函数 
+- 组合（Combining）将结果组合成数据框 
+  当然还有更多的操作比如： 
+- 聚合(Aggregation) 同时对分组进行多种计算，比如同时计算sum和means 
+- 变换(Transformation) 标准化分组数据，根据组数据填充组空值 
+- Filtration(
+
+### Serialization / IO / Conversion
+
+#### DataFrame.to_csv()
+
+```python
+datafrme.to_csv('name.csv')
+```
+
+
+
 # datetime
 
 ### datatime

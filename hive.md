@@ -117,12 +117,21 @@ data =
 
 **条件判断函数**
 
+`collect_list(name)`
+
+将name组成一个list，函数返回的类型是array< ？ >类型，？表示该列的类型，如果去重，使用`collect_set()`
+
+`array_contains(array arr, element)`
+
+判断元素是否存在与array列表中。
+
 ```sql
 --1.if
 --说明:  当条件testCondition为TRUE时，返回valueTrue；否则返回valueFalseOrNull
 if(boolean testCondition, T valueTrue, T valueFalseOrNull)
 
 --hive> select if(1=2,100,200) from dual;   返回：200
+--hive> select if(array_contains(t_cityid_list, b.city_id), 0, 1) is_out_city from table_name;
 
 --2.条件判断函数：case
 --说明：如果 a 等于 b ，那么返回 c ；如果 a 等于 d ，那么返回 e ；否则返回 f
@@ -220,5 +229,16 @@ hive> select percentile(score,<0.2,0.4>) from lxw_dual；取0.2，0.4位置的�
 --14. 直方图:histogram_numeric
 hive> select histogram_numeric(100,5) from lxw_dual;
 [{"x":100.0,"y":1.0}]
+```
+
+**hive日期时间格式转换**
+
+```sql
+--获得当前时区的UNIX时间戳
+hive> hive>   select unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss") from dual;
+
+--转化UNIX时间戳到当前时区的时间格式
+hive> select from_unixtime(unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss"),'HH') as hh from dual;
+-- 输出：20111208
 ```
 
