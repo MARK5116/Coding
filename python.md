@@ -604,6 +604,10 @@ with open('/path/to/file', 'r') as f:
 f = open('/Users/michael/test.txt', 'w')
 f.write('Hello, world!')
 f.close()
+
+#以变量命名文件名
+df = open('./data/' + city +'.csv', 'w')
+df.write(result + '\n')
 ```
 
 - 写文件和读文件是一样的，唯一区别是调用`open()`函数时，传入标识符`'w'`或者`'wb'`表示写文本文件或写二进制文件.

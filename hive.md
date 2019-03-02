@@ -2,43 +2,43 @@
 
 ## 常用命令
 
-**查看分区**
+###查看分区
 
 ```sql
 hive> show partitions table_name; 
 ```
 
-**删除表**
+###删除表
 
 ```hive
 hive> drop table if exists table_name;
 ```
 
-**查看表的描述**
+###查看表的描述
 
 ```hive
 hive> DESCRIBE table_name;
 ```
 
-**修改表**
+###修改表
 
 ```sql
 hive> ALTER TABLE table_name SET TBLPROPERTIES('comment' = '这是表注释!');
 ```
 
-**修改字段**
+###修改字段
 
 ```sql
 hive> ALTER TABLE table_name CHANGE COLUMN muid muid_new STRING COMMENT '这里是列注释!'; 
 ```
 
-**修改字段注释**
+###修改字段注释
 
 ```sql
 hive> alter table table_name CHANGE COLUMN muid_old muid_new int comment '这里是列注释';
 ```
 
-**查询不同的值**
+###查询不同的值
 
 ```sql
 hive> select distinct 字段名 from table_name;
@@ -47,7 +47,7 @@ hive> select count(distinct 字段名) from table_name;
 
 
 
-**把数据文件复制/移动到Hive表对应的地址**
+###把数据文件复制/移动到Hive表对应的地址
 
 ```sql
 hive> LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1,partcol2=val2 ...)]
@@ -87,7 +87,7 @@ Stored as textfile
 
 ## 常用的hiveQL函数
 
-**解析json字符串**
+###解析json字符串
 
 ```sql
 get_json_object(string json_string, string path)
@@ -122,7 +122,7 @@ hive> select coalesce(get_json_object(param['dynamic_price'], '${'$'}.600.noncar
 
 
 
-**条件判断函数**
+###条件判断函数
 
 `collect_list(name)`
 
@@ -154,7 +154,7 @@ CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END，
 hive> select COALESCE(null,'100','50′) from dual;  --输出：100
 ```
 
-**字段合并**
+###字段合并
 
 ```sql
 --将两个字段合并成一个字段
@@ -163,7 +163,7 @@ concat(year, month, day) between '20181026' and '20181026'
 hive> select concat(a, '_', b) from tablename;
 ```
 
-**关系运算**
+###关系运算
 
 ```sql
 --1.等值比较: =
@@ -179,7 +179,7 @@ hive> select concat(a, '_', b) from tablename;
 
 ```
 
-**逻辑操作符**
+###逻辑操作符
 
 ```sql
 --1.A AND B
@@ -198,7 +198,7 @@ hive> select concat(a, '_', b) from tablename;
 --7.[NOT] EXISTS (subquery)
 ```
 
-**集合统计函数**
+###集合统计函数
 
 ```sql
 --1. 个数统计函数: count
@@ -238,7 +238,7 @@ hive> select histogram_numeric(100,5) from lxw_dual;
 [{"x":100.0,"y":1.0}]
 ```
 
-**hive日期时间格式转换**
+###hive日期时间格式转换
 
 ```sql
 --获得当前时区的UNIX时间戳
@@ -249,7 +249,7 @@ hive> select from_unixtime(unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss"),'H
 -- 输出：20111208
 ```
 
-**数据类型转换**
+###数据类型转换
 
 ```sql
 --cast(name as int)
