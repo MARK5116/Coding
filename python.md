@@ -31,7 +31,9 @@ len(array[0])  #数组列数 column
 
 链接：https://www.jianshu.com/p/b758332c44bb
 
-**strip()       删除首尾某字符或空格**
+##### strip()       
+
+删除首尾某字符或空格
 
 功能：用于移除字符串头尾指定的字符（默认为空格或换行符）或字符序列。
 
@@ -45,7 +47,9 @@ len(array[0])  #数组列数 column
 
 比如：去首尾空格：`str.strip()`
 
-**split()　　分割字符**
+##### split()　　
+
+分割字符
 
 功能：Python **split()** 通过指定分隔符对字符串进行分割，如果参数 num 有指定值，则仅分隔 num 个子字符串。
 
@@ -86,7 +90,9 @@ print(' ',join(str(x) for x in b_list))
 
 
 
-**replace()      替换字符串**
+##### replace()      
+
+替换字符串
 
 语法：`str.replace(old, new[, max])`
 
