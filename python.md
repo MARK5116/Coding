@@ -878,3 +878,102 @@ datetime.datetime.strptime("2014-12-31 18:20:10", "%Y-%m-%d %H:%M:%S")
 
 ```
 
+# matplotlib
+
+## 绘图
+
+### 散点图
+
+```python
+import matplotlib
+import matplotlib.pyplot as plt
+
+x = [1,2,3,4,5]
+y = [1,2,3,4,5]
+
+#创建图并命名
+plt.figure('Scatter fig')
+#设置x轴、y轴名称
+ax = plt.gca()
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+
+#画散点图
+#参数c指定点的颜色，s指定点的大小,alpha指定点的透明度
+ax.scatter(x, y, c='r', s=30, alpha=0.5)
+
+plt.show()
+```
+
+### 直线
+
+```python 
+import matplotlib.pyplot as plot
+
+x_list = [1,2,3,4]
+y_list = [1,2,3,4]
+
+#创建图并命名
+plt.figure('Line fig')
+ax = plt.gca()
+#设置x轴、y轴名称
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+
+#画连线图
+#参数c指定连线的颜色，linewidth指定连线宽度，alpha指定连线的透明度
+ax.plot(x_list, y_list, color='r', linewidth=1, alpha=0.6)
+
+plt.show()
+```
+
+### 直方图
+
+```python 
+import matplotlib.pyplot as plot
+
+#数据
+x_list = [1,2,3,4]
+y_list = [1,2,3,4]
+
+plt.figure('Bar fig')
+ax = plt.gca()
+ax.set_xlabel('value')
+ax.set_ylabel('count')
+
+#edgecolor指定每个直方的边框颜色
+#传入的xticks与y_list的长度必须相等！
+ax.bar(x_list, y_list, width=0.5,
+       edgecolor='none')
+
+plt.show()
+```
+
+### 双Y轴图
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = [1,2,3,4]
+y2 = [1,2,3,4]
+y1 = [4,3,2,1]
+
+fig = plt.figure()
+
+ax1 = fig.add_subplot(111)
+ax1.bar(x, y1)
+ax1.set_ylabel('y1')
+ax1.set_title("双y轴图")
+
+ax2 = ax1.twinx()  # this is the important function
+ax2.plot(x, y2, 'r')
+ax2.set_ylabel('y2')
+ax2.set_xlabel('x')
+ax2.scatter(x,y2,c='r')
+
+plt.show()
+```
+
+
+
