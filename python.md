@@ -975,5 +975,224 @@ ax2.scatter(x,y2,c='r')
 plt.show()
 ```
 
+# python    json  
+
+链接：https://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p02_read-write_json_data.html	
+
+## 基本使用     
+
+作用：读写JSON数据。读写JSON(JavaScript Object Notation)编码格式的数据。
+
+json` 模块提供了一种很简单的方式来编码和解码JSON数据。 ` 
+
+主要的函数是 `json.dumps()` 和 `json.loads()` 。 
+
+将一个Python数据结构转换为JSON：
+
+```python
+import json
+
+data = {
+    'name' : 'ACME',
+    'shares' : 100,
+    'price' : 542.23
+}
+
+json_str = json.dumps(data)
+```
+
+将一个JSON编码的字符串转换回一个Python数据结构：
+
+```python
+data = json.loads(json_str)
+```
+
+如果你要处理的是文件而不是字符串，你可以使用 `json.dump()` 和 `json.load()` 来编码和解码JSON数据。
+
+例如：
+
+```python
+# Writing JSON data
+with open('data.json', 'w') as f:
+    json.dump(data, f)
+
+# Reading data back
+with open('data.json', 'r') as f:
+    data = json.load(f)
+```
+
+## 讨论
+
+JSON编码支持的基本数据类型为 `None` ， `bool` ， `int` ， `float` 和 `str` ， 以及包含这些类型数据的lists，tuples和dictionaries。 对于dictionaries，keys需要是字符串类型(字典中任何非字符串类型的key在编码时会先转换为字符串)。 为了遵循JSON规范，你应该只编码Python的lists和dictionaries。 而且，在web应用程序中，顶层对象被编码为一个字典是一个标准做法。
+
+JSON编码的格式对于Python语法而已几乎是完全一样的，除了一些小的差异之外。 比如，True会被映射为true，False被映射为false，而None会被映射为null。 下面是一个例子，演示了编码后的字符串效果：
+
+```python
+>>> json.dumps(False)
+＃输出：'false'
+>>> d = {'a': True,
+...     'b': 'Hello',
+...     'c': None}
+>>> json.dumps(d)
+＃输出：'{"b": "Hello", "c": null, "a": true}'
+
+```
+
+# python tornado
+
+Tornado，一个编写易创建、扩展和部署的强力Web应用的梦幻选择。本文是对Tornado Web服务器进行一个概述，通过框架基础、一些示例应用和使用的最佳实践来引导。
+
+## 案例
+
+### 简单的web使用
+
+tornado是一个编写对HTTP请求响应的框架。下面是一个全功能的Tornado应用的基础示例：
+
+```python
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
+
+from tornado.options import define, options
+define("port", default=8000, help="run on the given port", type=int)
+
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):
+        greeting = self.get_argument('greeting', 'Hello')
+        self.write(greeting + ', friendly user!')
+
+if __name__ == "__main__":
+    tornado.options.parse_command_line()
+    app = tornado.web.Application(handlers=[(r"/", IndexHandler)])
+    http_server = tornado.httpserver.HTTPServer(app)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
+```
+
+在浏览器中输入：http://127.0.0.1:8000/
+
+输出：　Hello, friendly user!
+
+### 字符串服务
+
+```python
+import textwrap
+
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
+
+from tornado.options import define, options
+define("port", default=8000, help="run on the given port", type=int)
+
+class ReverseHandler(tornado.web.RequestHandler):
+    def get(self, input):
+        self.write(input[::-1])
+
+class WrapHandler(tornado.web.RequestHandler):
+    def post(self):
+        text = self.get_argument('text')
+        width = self.get_argument('width', 40)
+        self.write(textwrap.fill(text, int(width)))
+
+if __name__ == "__main__":
+    tornado.options.parse_command_line()
+    app = tornado.web.Application(
+        handlers=[
+            (r"/reverse/(\w+)", ReverseHandler),
+            (r"/wrap", WrapHandler)
+        ]
+    )
+    http_server = tornado.httpserver.HTTPServer(app)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
+```
+
+这个程序是一个通用的字符串操作的Web服务端基本框架。可以用它做两件事情。
+
+- 其一，到`/reverse/string`的GET请求将会返回URL路径中指定字符串的反转形式。
+- 其二，到`/wrap`的POST请求将从参数text中取得指定的文本，并返回按照参数width指定宽度装饰的文本。下面的请求指定一个没有宽度的字符串，所以它的输出宽度被指定为程序中的get_argument的默认值40个字符。
+
+### 关于RequestHandler类
+
+每个RequestHandler类都只定义了一个HTTP方法的行为。
+
+#### HTTP的状态码
+
+- 404 Not Found
+
+Tornado会在HTTP请求的路径无法匹配任何RequestHandler类相对应的模式时返回404（Not Found）响应码。
+
+- 400 Bad Request
+
+如果你调用了一个没有默认值的get_argument函数，并且没有发现给定名称的参数，Tornado将自动返回一个400（Bad Request）响应码。
+
+- 405 Method Not Allowed
+
+如果传入的请求使用了RequestHandler中没有定义的HTTP方法（比如，一个POST请求，但是处理函数中只有定义了get方法），Tornado将返回一个405（Methos Not Allowed）响应码。
+
+- 500 Internal Server Error
+
+当程序遇到任何不能让其退出的错误时，Tornado将返回500（Internal Server Error）响应码。你代码中任何没有捕获的异常也会导致500响应码。
+
+- 200 OK
+
+如果响应成功，并且没有其他返回码被设置，Tornado将默认返回一个200（OK）响应码。
+
+### 案例
+
+```python
+#-*- coding: UTF-8 -*-
+import time
+import gensim
+
+import json
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
+from tornado.options import define, options
+import logging
+define("port", default=8081, help="run on the give port", type=int)
+logging.basicConfig(level=logging.INFO)
+
+class HbaseConnet:
+    def __init__(self):
+        self.model = ""
+        #self.model = gensim.models.Word2Vec.load('./data/emontionalModel2')
+    def get_topN_word(self, n,word):
+        n = int(n)
+        #res = self.model.most_similar(word, topn=n)
+        return {"res": 11111111111}
+        #return {"res": str(n)+word}
+        # return self.model.most_similarity(word, n)
+
+class indexHandler(tornado.web.RequestHandler):
+    # get: 浏览器拼url, 新闻后面的参数
+    def get(self):
+        # self.get_argment获取参数
+        key1 = self.get_argument("n")
+        key2 = self.get_argument("word")
+        res = H.get_topN_word(key1,key2)
+        # res = {"a": 1}
+        self.set_header("Content-Type", "application/json")
+        self.write(json.dumps(res, ensure_ascii=False, indent=4, separators=(',', ': ')))
+
+if __name__ == "__main__":
+    # http://127.0.0.1:8081/word2vec?n=1&word=iii
+    tornado.options.parse_command_line()
+    logging.info("start init model...")
+    H = HbaseConnet()
+    logging.info("start application...")
+    app = tornado.web.Application(handlers=[(r"/word2vec", indexHandler)])
+    http_server = tornado.httpserver.HTTPServer(app)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
+```
+
+在浏览器中输入：　http://127.0.0.1:8081/word2vec?n=1&word=iii
+
 
 
