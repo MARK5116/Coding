@@ -882,6 +882,34 @@ datetime.datetime.strptime("2014-12-31 18:20:10", "%Y-%m-%d %H:%M:%S")
 
 ## 绘图
 
+### 常用函数
+
+```python 
+#修改上下界
+plt.xlim(xmax=7,xmin=0)
+plt.ylim(ymax=7,ymin=0)
+
+#添加标题
+plt.title("I'm a scatter diagram.") 
+
+#给x,y命名
+plt.xlabel("x")
+plt.ylabel("y")
+
+#加标注
+plt.annotate("(3,6)", xy = (3, 6), xytext = (4, 5), arrowprops = dict(facecolor = 'black', shrink = 0.1))
+
+#画子图，221表示2*2四个图的第一个
+plt.subplot(221)
+
+#保存图
+plt.savefig('a.png')
+
+
+```
+
+
+
 ### 散点图
 
 ```python
