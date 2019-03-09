@@ -1,5 +1,17 @@
 # python基础
 
+## 常用技巧
+
+**整数输出格式：**
+
+```python 
+for i in range(1,366):
+    m = "%03d" % i      #输出001
+    print('part00'+str(m))
+```
+
+
+
 ## 转移字符
 
 | 转义字符 | 输出               |
@@ -612,7 +624,11 @@ f.write('Hello, world!')
 f.close()
 
 #以变量命名文件名
+#方法一：
 df = open('./data/' + city +'.csv', 'w')
+#方法二：
+city = 2
+df = open('./data/%s.csv' % (city))
 df.write(result + '\n')
 ```
 
@@ -905,7 +921,10 @@ plt.subplot(221)
 #保存图
 plt.savefig('a.png')
 
-
+#多项式函数np.poly1d()
+fit = [2,3]
+fit_fn = np.poly1d(fit)
+print(fit_fn)  #输出：2x+3
 ```
 
 
