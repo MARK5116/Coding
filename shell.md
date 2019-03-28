@@ -1,3 +1,18 @@
+# 常用技巧
+
+**问题：对于’1,2,3,4,5’这样的字符串输出采用,分隔开的1 2 3 4 5**
+
+```shell
+#解决方法1：
+!/bin/bash
+var=’1,2,3,4,5’
+var=${var//,/ }    #这里是将var中的,替换为空格
+for element in $var 
+do
+    echo $element
+done
+```
+
 # echo命令
 
 Shell 的 echo 指令与 PHP 的 echo 指令类似，都是用于字符串的输出。命令格式：
@@ -118,4 +133,3 @@ echo `date`
 ```
 Thu Jul 24 10:08:46 CST 2014
 ```
-

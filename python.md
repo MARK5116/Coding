@@ -10,6 +10,19 @@ for i in range(1,366):
     print('part00'+str(m))
 ```
 
+**将列表中数字字符串转换为整数再排序：**
+
+```python
+numbers = ['2', '4', '1', '3']
+numbers = map(int, numbers)
+#正序
+numbers = sorted(numbers, reverse = False)
+#倒序
+numbers = sorted(numbers, reverse = True)
+```
+
+
+
 ## 转移字符
 
 | 转义字符 | 输出               |
@@ -792,6 +805,54 @@ print(ret)
 
 功能：求绝对值。
 
+### np.reshape()
+
+```python
+z = np.array([[1, 2, 3, 4],[5, 6, 7, 8],[9, 10, 11, 12],[13, 14, 15, 16]])
+
+print(z)
+'''
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]
+ [13 14 15 16]]
+'''
+print(z.shape)
+#(4, 4)
+print(z.reshape(-1))
+#[ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16]
+print(z.reshape(-1,1))  
+#我们不知道z的shape属性是多少，
+#但是想让z变成只有一列，行数不知道多少，
+#通过`z.reshape(-1,1)`，Numpy自动计算出有16行，
+#新的数组shape属性为(16, 1)，与原来的(4, 4)配套。
+'''
+[[ 1]
+ [ 2]
+ [ 3]
+ [ 4]
+ [ 5]
+ [ 6]
+ [ 7]
+ [ 8]
+ [ 9]
+ [10]
+ [11]
+ [12]
+ [13]
+ [14]
+ [15]
+ [16]]
+'''
+print(z.reshape(2,-1))
+'''
+[[ 1  2  3  4  5  6  7  8]
+ [ 9 10 11 12 13 14 15 16]]
+'''
+```
+
+
+
 # pandas
 
 ## DataFrame
@@ -993,6 +1054,33 @@ ax.bar(x_list, y_list, width=0.5,
 
 plt.show()
 ```
+
+
+
+**并列直方图**
+
+```python 
+import numpy as np
+import matplotlib.pyplot as plt
+
+size = 5
+x = np.arange(size)
+a = np.random.random(size)
+b = np.random.random(size)
+c = np.random.random(size)
+
+total_width, n = 0.8, 3
+width = total_width / n
+x = x - (total_width - width) / 2
+
+plt.bar(x, a,  width=width, label='a')
+plt.bar(x + width, b, width=width, label='b')
+plt.bar(x + 2 * width, c, width=width, label='c')
+plt.legend()
+plt.show()
+```
+
+
 
 ### 双Y轴图
 
