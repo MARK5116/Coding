@@ -1,6 +1,48 @@
 # 排序
 
-## 冒泡
+## 选择排序
+
+时间复杂度：O(n*n)
+
+空间复杂度：O(1)
+
+```python
+def select_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min = i
+        for j in range(i+1, n):
+            if arr[min] > arr[j]:
+                min = j
+        arr[i],arr[min] = arr[min],arr[i]
+
+    return arr
+```
+
+## 插入排序
+
+时间复杂度：最好：O(n)   最坏：O(n*n)    平均：O(nn)
+
+空间复杂度：O(1)
+
+```python
+#插入排序
+def insert_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        key = arr[i]
+        j = i - 1
+        while j >= 0:
+            if arr[j] > key:
+                arr[j+1] = arr[j]
+                arr[j] = key
+            j -= 1
+    return arr
+```
+
+
+
+## 冒泡排序
 
 ```python
 #时间复杂度：O(n*n)

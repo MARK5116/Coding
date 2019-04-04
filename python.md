@@ -1,5 +1,19 @@
 # python基础
 
+## 数据格式转换
+
+```python
+#DataFrame - list
+# -*- coding:utf-8-*-
+import numpy as np
+import pandas as pd
+
+train_data = np.array(data_x)#np.ndarray()
+train_x_list=train_data.tolist()#list
+```
+
+
+
 ## 常用技巧
 
 **整数输出格式：**
@@ -1054,8 +1068,6 @@ ax.bar(x_list, y_list, width=0.5,
 
 plt.show()
 ```
-
-
 
 **并列直方图**
 
