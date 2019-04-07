@@ -106,7 +106,7 @@ def bubble_sort(arr):
 def qsort(arr, low, high):
     i = low
     j = high
-    if i < j:
+    while i < j:
         while i < j and arr[i] < arr[j]:
             j -= 1
         if i < j:

@@ -11,6 +11,7 @@ def select_sort(arr):
         arr[i],arr[min] = arr[min],arr[i]
 
     return arr
+
 #插入排序
 def insert_sort(arr):
     n = len(arr)
@@ -23,18 +24,30 @@ def insert_sort(arr):
                 arr[j] = key
             j -= 1
     return arr
+
 #归并排序
+def merge(left, right):
+    i = 0
+    j = 0
+    result = []
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j +=1
+
+    result += left[i:]
+    result += right[j:]
+    return result
 def merge_sort(arr):
     if len(arr) <= 1:
         return arr
     num = len(arr) / 2
-#    print(arr)
     left = merge_sort(arr[:num])
-#    return left
-    print(arr,'~')
     right = merge_sort(arr[num:])
-#    print(right,'_')
-    return left,right
+    return merge(left,right)
 
 if __name__ == "__main__":
     raw_arr = [38,65,97,76,13,27,49]
@@ -46,7 +59,4 @@ if __name__ == "__main__":
     #print(raw_arr)
     merge_arr = merge_sort(raw_arr)
     print(merge_arr)
-
-
-
 
