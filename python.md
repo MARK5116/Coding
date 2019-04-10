@@ -119,7 +119,7 @@ print(' '.join(a_list))
 #输出：monday tuesday wednesday thursday friday saturday sunday
 
 b_list = [1,2,3,4]
-print(' ',join(str(x) for x in b_list))
+print(' '.join(str(x) for x in b_list))
 #输出：1 2 3 4
 
 
@@ -870,6 +870,187 @@ print(z.reshape(2,-1))
 # pandas
 
 ## DataFrame
+
+### 查看数据
+
+```python
+#查看首或者尾数据
+df.head()
+df.tail()
+#显示数据框的索引
+df.index
+#显示列名
+df.columns
+#显示值（所有值）
+df.values
+#显示数据的简短统计摘要
+df.describe()
+#数据转置
+df.T
+#通过轴来分类你的数据（相当于排序，axis=1可以理解为分类列名，=0则为索引名）
+df.sort_index(axis=1, ascending=False)
+#通过值来分类
+df.sort_values(by='B')
+#查看行数和列数
+df.shape()
+#查看索引、数据类型和内存信息
+df.info()
+
+```
+
+### 选择数据
+
+```python
+#在方括号中输入这个单一的列名，来获得一个Series，该操作相当于df.A
+df['A']  #以Series的形式返回列
+#通过对行切片来获取数据
+df[0:5]   #表示前5个样本
+#用标签来截取一行数据
+df[[0]]
+#在多个轴上通过标签来选取数据
+df.loc[:,['A','B']]
+df[['A','B']]   #以DataFrame形式返回多列
+#同时用标签切片和标签名索引来获取数据
+df.loc[1:10,['A','B']]
+
+#查看第几个样本的所有数据
+df.iloc[3]
+df.iloc[3:5,0:2]  #3到5个样本的前两个字段
+
+
+#使用isin()方法来过滤数据
+df2[df2['E'].isin(['two','four'])]
+```
+
+### 数据清理
+
+```python
+#重命名列名
+df.columns = ['a','b','c']
+#批量更改列名
+df.rename(columns=lambda x: x + 1)
+#选择性更改列名
+df.rename(columns={'old_name': 'new_ name'})
+#更改索引列
+df.set_index('column_one')
+#批量重命名索引
+df.rename(index=lambda x: x + 1)
+
+#缺失值
+#检查DataFrame对象中的空值，并返回一个Boolean数组,缺失值为Ture
+pd.isnull(df)
+#检查DataFrame对象中的非空值，并返回一个Boolean数组
+pd.notnull(df)
+#删除所有包含空值的行
+df.dropna()
+#删除所有包含空值的列
+df.dropna(axis=1)
+#删除所有小于n个非空值的行
+df.dropna(axis=1,thresh=n)
+#用5替换DataFrame对象中所有的空值
+df.fillna(value=5)
+
+#df['A']  #以Series的形式返回列
+#将Series中的数据类型更改为float类型
+s.astype(float)
+#用‘one’代替所有等于1的值
+s.replace(1,'one')
+#用'one'代替1，用'three'代替3
+s.replace([1,3],['one','three'])
+```
+
+### 数据处理
+
+```python
+#选择col列的值大于0.5的行
+df[df[col] > 0.5]
+df[df.col > 0.5]
+
+#排序
+#按照列col1排序数据，默认升序排列
+df.sort_values(col1)
+#按照列col2降序排列数据
+df.sort_values(col2, ascending=False)
+#先按列col1升序排列，后按col2降序排列数据
+df.sort_values([col1,col2], ascending=[True,False])
+
+#分组运算
+#返回一个按列col进行分组的Groupby对象
+df.groupby(col)
+#返回一个按多列进行分组的Groupby对象
+df.groupby([col1,col2])
+#返回按列col1进行分组后，列col2的均值
+df.groupby(col1)[col2]
+#返回按列col1分组的所有列的均值
+df.groupby(col1).agg(np.mean)
+#创建一个按列col1进行分组，并计算col2和col3的最大值的数据透视表
+df.pivot_table(index=col1, values=[col2,col3], aggfunc=max)
+
+#应用：对数据进行函数的应用
+#对DataFrame中的每一列应用函数np.mean
+data.apply(np.mean)
+#对DataFrame中的每一行应用函数np.max
+data.apply(np.max,axis=1)
+df.apply(lambda x: x.max() - x.min())
+```
+
+### 数据合并 
+
+```python
+#将df2中的行添加到df1的尾部
+df1.append(df2)
+
+#将df2中的列添加到df1的尾部
+df.concat([df1, df2],axis=1)
+#用concat()函数来连接pandas对象
+pieces = [df[:3], df[3:7], df[7:]]
+pd.concat(pieces)
+
+#对df1的列和df2的列执行SQL形式的join
+df1.join(df2,on=col1,how='inner')
+
+#链接两个数据表
+pd.merge(dataframe1, dataframe2, how='left', on=['city_id','is_short'])
+
+```
+
+### 数据统计
+
+```python
+#查看数据值列的汇总统计
+df.describe()
+#返回所有列的均值
+df.mean()
+#返回列与列之间的相关系数
+df.corr()
+#返回每一列中的非空值的个数
+df.count()
+#返回每一列的最大值
+df.max()
+#返回每一列的最小值
+df.min()
+#返回每一列的中位数
+df.median()
+#返回每一列的标准差
+df.std()
+
+#统计值的频数
+df['A'].value_counts()
+```
+
+### 输入／输出数据
+
+```python
+#把数据输出为csv文件
+df.to_csv('foo.csv')
+#读取csv文件
+pd.read_csv('foo.csv')
+
+#写出一个excel文件
+df.to_excel('foo.xlsx', sheet_name='Sheet1')
+#读入一个excel文件
+pd.read_excel('foo.xlsx', 'Sheet1', index_col=None, na_values=['NA'])
+```
 
 ### Reindexing / Selection / Label manipulation
 
