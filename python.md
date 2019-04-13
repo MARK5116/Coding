@@ -871,6 +871,28 @@ print(z.reshape(2,-1))
 
 ## DataFrame
 
+### 数据格式转换
+
+**将数据转为list列表**
+
+```python
+#对于文本文件
+df = pd.read_csv(file) #pd.dataframe
+data_ndarray = np.array(df)#np.ndarray()
+data_list=data_ndarray.tolist()#list
+
+#对于SQL
+data = spark.sql(sql)
+df = data.toPandas()
+data_ndarray = np.array(df)#np.ndarray()
+data_list=data_ndarray.tolist()#list
+
+#对于spark RDD数据
+rdd = sc.textFile(file)
+df = rdd.toDF
+data_list = rdd.collect()
+```
+
 ### 查看数据
 
 ```python
@@ -957,6 +979,9 @@ s.astype(float)
 s.replace(1,'one')
 #用'one'代替1，用'three'代替3
 s.replace([1,3],['one','three'])
+
+#数据去重
+df.drop_duplicates(['trace_id'])
 ```
 
 ### 数据处理
@@ -1025,6 +1050,7 @@ df.mean()
 df.corr()
 #返回每一列中的非空值的个数
 df.count()
+df.drop_duplicates(['trace_id']).count()
 #返回每一列的最大值
 df.max()
 #返回每一列的最小值
@@ -1038,7 +1064,7 @@ df.std()
 df['A'].value_counts()
 ```
 
-### 输入／输出数据
+### 输入/输出数据
 
 ```python
 #把数据输出为csv文件
@@ -1052,44 +1078,11 @@ df.to_excel('foo.xlsx', sheet_name='Sheet1')
 pd.read_excel('foo.xlsx', 'Sheet1', index_col=None, na_values=['NA'])
 ```
 
-### Reindexing / Selection / Label manipulation
-
-#### DataFrame.drop_duplicates()
-
-功能：去除DataFrame的重复项。
-
-```python 
-dat_2 = dat.drop_duplicates(['trace_id'])
-```
-
-### Computations / Descriptive Stats
-
-#### DataFrame.count()
-
-功能：统计DataFrame的数量。
-
-```python
-data_1 = data.drop_duplicates(['trace_id']).count()
-```
-
 ### Attributes and underlying data
 
 #### DataFrame.values
 
 功能：把Pandas中的dataframe转成numpy中的array。
-
-### Combining / joining / merging
-
-#### DataFrame.merge()
-
-```python
-result = pd.merge(dataframe1, dataframe2, how='left', on=['city_id','is_short'])
-```
-
-说明：1. Dataframe1和dataframe2为两个数据表。
-
-1. how为连接方式，
-2. on指定以哪些列连接。
 
 ### Function application, GroupBy & Window
 
@@ -1116,8 +1109,6 @@ result = pd.merge(dataframe1, dataframe2, how='left', on=['city_id','is_short'])
 ```python
 datafrme.to_csv('name.csv')
 ```
-
-
 
 # datetime
 

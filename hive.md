@@ -81,9 +81,9 @@ fields terminated by ','
 Stored as textfile
 ```
 
+### 根据表名查询HDFS路径
 
-
-
+`hive -e "desc formatted [表名]"` 来获取表的信息，从而得知表的 HDFS 路径。
 
 ## 常用的hiveQL函数
 
@@ -255,4 +255,3 @@ hive> select from_unixtime(unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss"),'H
 --cast(name as int)
 --hive> select cast(param['pre_total_fee'] as double) pre_total_fee_kuai from table_name;
 ```
-
