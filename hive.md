@@ -1,5 +1,19 @@
 # hive
 
+## 特殊方法 
+
+### 问题1
+
+**查找数据存在A表中，但是不存在B表**
+
+https://www.cnblogs.com/xwdreamer/archive/2012/06/01/2530597.html
+
+```sql
+select * from A left join B on A.id=B.id where B.id is null
+```
+
+
+
 ## 常用命令
 
 ###查看分区
@@ -240,9 +254,17 @@ hive> select histogram_numeric(100,5) from lxw_dual;
 
 ###hive日期时间格式转换
 
+`unix_timestamp()`是hive系统时间，格式是timestamp，精确到秒。
+ `unix_timestamp(ymdhms)`是把时间转换成timestamp格式，是`2018-05-23 07:15:50`格式。
+  `unix_timestamp() - unix_timestamp(ymdhms)`是两个时间转换为timestamp之后相减，timestamp单位是秒，相减之后是两个时间之间相差的秒数。
+ `CAST((unix_timestamp() - unix_timestamp(ymdhms)) % 60 AS int)`是相差的秒数。
+ `CAST((unix_timestamp() - unix_timestamp(ymdhms)) / 60 AS int) % 60`是相差的分钟数。
+  `CAST((unix_timestamp() - unix_timestamp(ymdhms)) / (60 * 60) AS int) % 24`是相差的小时数。
+ `concat(CAST((unix_timestamp() - unix_timestamp(ymdhms)) / (60 * 60 * 24) AS int)`是相差的天数。
+
 ```sql
 --获得当前时区的UNIX时间戳
-hive> hive>   select unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss") from dual;
+hive>select unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss") from dual;
 
 --转化UNIX时间戳到当前时区的时间格式
 hive> select from_unixtime(unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss"),'HH') as hh from dual;

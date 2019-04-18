@@ -219,7 +219,15 @@ kill [-s <信息名称或编号>][程序]　或　kill [-l <信息编号>]
 
 4.打包，不压缩
 tar -cvf test.tar test
+```
 
+### sh
+
+```
+-c string：命令从-c后的字符串读取。
+-i：实现脚本交互。
+-n：进行shell脚本的语法检查。
+-x：实现shell脚本逐条语句的跟踪。
 ```
 
 # Vim命令
@@ -335,3 +343,100 @@ set expandtab
 
    CTRL+SHIFT+D：当前行减少缩进
 
+### vim分屏命令
+
+https://coolshell.cn/articles/1679.html
+
+**分屏启动Vim**
+
+1. 使用大写的O参数来垂直分屏。
+
+   ```
+   vim -On file1 file2 ...
+   ```
+
+2. 使用小写的o参数来水平分屏。
+
+   ```
+   vim -on file1 file2 ...
+   ```
+
+**分屏**
+
+1. 上下分割当前打开的文件。
+
+   ```
+   :split
+   :sp
+   Ctrl+W s
+   ```
+
+2. 上下分割，并打开一个新的文件。
+
+   ```
+   :sp filename
+   :split filename
+   ```
+
+3. 左右分割当前打开的文件。
+
+   ```
+   Ctrl+W v
+   :vsp
+   :vsplit
+   ```
+
+4. 左右分割，并打开一个新的文件。
+
+   ```
+   :vsp filename
+   :vsplit filename
+   ```
+
+**移动光标**
+
+Vim中的光标键是h, j, k, l，要在各个屏间切换，只需要先按一下Ctrl+W
+
+1. 把光标移到右边的屏。
+
+   ```
+   Ctrl+W l
+   ```
+
+2. 把光标移到左边的屏中。
+
+   ```
+   Ctrl+W h
+   ```
+
+3. 把光标移到上边的屏中。
+
+   ```
+   Ctrl+W k
+   ```
+
+4. 把光标移到下边的屏中。
+
+   ```
+   Ctrl+W j
+   ```
+
+5. 把光标移到下一个的屏中。.
+
+   ```
+   Ctrl+W w
+   ```
+
+**关闭分屏**
+
+1. 关闭当前窗口。
+
+   ```
+   Ctrl+W c
+   ```
+
+2. 关闭当前窗口，如果只剩最后一个了，则退出Vim。
+
+   ```
+   Ctrl+W q
+   ```

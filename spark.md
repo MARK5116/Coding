@@ -42,11 +42,12 @@ for j in range(367):
         instance = day.map(lambda x: [x.split("\t")[3], x]).filter(lambda x: x[0][0:10] == i).map(lambda x: x[1]).saveAsTextFile('/user/bigdata_driver_ecosys_test/liuzhu/split_train_explore_instance/%s/%s' % (i,city_id))
 ```
 
-### 常用函数
+## 数据读取／保存
 
 ```python 
 #读取文件
-data = sc.textFile(filename, 2)
+data = sc.textFile(filename)
+
 #保存文件
 #一般而言，saveAsTextFile会按照执行task的多少生成多少个文件，比如part-00000一直到part-0000n，n自然就是task的个数，亦即是最后的stage的分区数.
 data.saveAsTextFile(filename)
@@ -58,6 +59,52 @@ data.coalesce(1).saveAsTextFile(filename)
 
 
 ##  常用函数
+
+### 获取数据（查看）
+
+**take(n)**
+
+功能：收集RDD中的一些元素
+
+**collect()**
+
+功能：获取RDD中所有数据，这个方法可以将RDD类型的数据转化为数组，适合用于小数据量。
+
+**first()**
+
+功能：获取第一个元素。
+
+**top(n)**
+
+功能：返回最前面的n 个元素。
+
+### 传递函数使用
+
+```python
+import json
+def flat_map_bubble(line):
+    List = []
+    j = json.loads(line.strip())
+    
+    bubble_id=j['bubble_id']
+    fee=j['pre_total_fee_kuai']
+    distance=j['distance']
+    
+    List.append(distance)
+    List.append(fee)
+    
+    discount_ecr = j['discount_ecr']
+    for discount in range(70, 101):
+        d = str(1 - discount * 0.01)
+        if d not in discount_ecr:continue
+        List.append((discount, [1, float(discount_ecr[d])]))
+        
+    return (bubble_id,List)
+
+rdd_day_hour_discecr = sc.textFile(file).map(flat_map_bubble) 
+```
+
+
 
 ### withColumn()
 
@@ -101,9 +148,7 @@ data = data.filter('discount >=0.8').groupby('discount').\
         agg(count('label').alias("bubble"), sum('label').alias('order'))
 ```
 
-### collect()
 
-功能：Spark内有collect方法，是Action操作里边的一个算子，这个方法可以将RDD类型的数据转化为数组，同时会从远程集群是拉取数据到driver端。
 
 ### filter()
 
@@ -123,6 +168,72 @@ if __name__ == "__main__":
     res = sorted(even_squares(nums).collect())
     print (res)
 ```
+
+### union()
+
+功能：将两个RDD合并操作
+
+```python
+RDD = RDD1.union(RDD2)
+```
+
+### intersection()
+
+功能：返回两个RDD共同元素的RDD。
+
+### subtract()
+
+功能：移除一个RDD的内容 。
+
+### count()
+
+功能 ：计数
+
+```python
+RDD.count()
+```
+
+### map()
+
+功能：将函数应用于RDD中的每个元素，将返回值构成一个新的RDD。
+
+### distinct()
+
+功能：去重
+
+## 键值对操作
+
+### 创建键值对
+
+可以使用map()来实现。
+
+```python
+import json
+def flat_map_bubble(line):
+    List = []
+    j = json.loads(line.strip())
+    
+    bubble_id=j['bubble_id']
+    fee=j['pre_total_fee_kuai']    
+    distance=j['distance']
+    
+    List.append(distance)
+    List.append(fee)
+ 
+    discount_ecr = j['discount_ecr']
+    for discount in range(70, 101):
+        d = str(1 - discount * 0.01)
+        if d not in discount_ecr:continue
+        List.append((discount, [1, float(discount_ecr[d])]))
+        
+    return (bubble_id,List)
+
+rdd_day_hour_discecr = sc.textFile(file).map(flat_map_bubble) 
+# 生成键值对(bubble_id, [distance,fee,discount_ecr])
+
+```
+
+
 
 
 
