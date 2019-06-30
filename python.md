@@ -12,8 +12,6 @@ train_data = np.array(data_x)#np.ndarray()
 train_x_list=train_data.tolist()#list
 ```
 
-
-
 ## 常用技巧
 
 **整数输出格式：**
@@ -35,40 +33,438 @@ numbers = sorted(numbers, reverse = False)
 numbers = sorted(numbers, reverse = True)
 ```
 
+**一行代码定义List**
+
+```python
+numble = [1,2,3,4,5]
+
+odds = []
+for n in numble:
+    if n % 2 == 1:
+        odds.append(n*2)
+#oddss = [n*2 for n in numble if n%2==1]       
+print odds
+print oddss
+```
+
+## 转义字符
+
+在需要在字符中使用特殊字符时，python用反斜杠(\)转义字符。如下表：
+
+| 转义字符    | 描述            |
+| ----------- | --------------- |
+| \(在行尾时) | 续行符          |
+| \\          | 反斜杠符号      |
+| \'          | 单引号          |
+| \"          | 双引号          |
+| \a          | 响铃            |
+| \b          | 退格(Backspace) |
+| \e          | 转义            |
+| \000        | 空              |
+| \n          | 换行            |
+| \v          | 纵向制表符      |
+| \t          | 横向制表符      |
+| \r          | 回车            |
+| \f          | 换页            |
+
+## 变量类型
+
+### 多个变量赋值
+
+```python
+a = b = c = 1
+a, b, c = 1, 2, "john"
+```
+
+### 数据类型
+
+- Numbers（数字）
+
+  数字类型：
+
+  int（有符号整型），long（长整型[也可以代表八进制和十六进制]），float（浮点型），complex（复数）
+
+- String（字符串）
+
+- List（列表）
+
+- Tuple（元组）
+
+  不可变，可以索引
+
+- Dictionary（字典）
+
+  无序，通过键来获取数据
+
+  ```python
+  print dict[key]        # 输出键为 key 的值
+  print dict.keys()      # 输出所有键
+  print dict.values()    # 输出所有值
+  ```
+
+### 数据类型转换
+
+| 函数                                                         | 描述                                                |
+| ------------------------------------------------------------ | --------------------------------------------------- |
+| [int(x [,base\])](https://www.runoob.com/python/python-func-int.html) | 将x转换为一个整数                                   |
+| [long(x [,base\] )](https://www.runoob.com/python/python-func-long.html) | 将x转换为一个长整数                                 |
+| [float(x)](https://www.runoob.com/python/python-func-float.html) | 将x转换到一个浮点数                                 |
+| [complex(real [,imag\])](https://www.runoob.com/python/python-func-complex.html) | 创建一个复数                                        |
+| [str(x)](https://www.runoob.com/python/python-func-str.html) | 将对象 x 转换为字符串                               |
+| [repr(x)](https://www.runoob.com/python/python-func-repr.html) | 将对象 x 转换为表达式字符串                         |
+| [eval(str)](https://www.runoob.com/python/python-func-eval.html) | 用来计算在字符串中的有效Python表达式,并返回一个对象 |
+| [tuple(s)](https://www.runoob.com/python/att-tuple-tuple.html) | 将序列 s 转换为一个元组                             |
+| [list(s)](https://www.runoob.com/python/att-list-list.html)  | 将序列 s 转换为一个列表                             |
+| [set(s)](https://www.runoob.com/python/python-func-set.html) | 转换为可变集合                                      |
+| [dict(d)](https://www.runoob.com/python/python-func-dict.html) | 创建一个字典。d 必须是一个序列 (key,value)元组。    |
+| [frozenset(s)](https://www.runoob.com/python/python-func-frozenset.html) | 转换为不可变集合                                    |
+| [chr(x)](https://www.runoob.com/python/python-func-chr.html) | 将一个整数转换为一个字符                            |
+| [unichr(x)](https://www.runoob.com/python/python-func-unichr.html) | 将一个整数转换为Unicode字符                         |
+| [ord(x)](https://www.runoob.com/python/python-func-ord.html) | 将一个字符转换为它的整数值                          |
+| [hex(x)](https://www.runoob.com/python/python-func-hex.html) | 将一个整数转换为一个十六进制字符串                  |
+| [oct(x)](https://www.runoob.com/python/python-func-oct.html) | 将一个整数转换为一个八进制字符串                    |
+
+#### eval()	repr()	isinstance()
+
+- isinstance()
+
+功能：判断一个对象是否是一个已知的类型
+
+- eval()
+
+功能：将字符串str转化为dict, list, tuple数据类型
+
+- repr()
+
+功能：和eval()相反，将dict, list, tuple数据类型转化为str
+
+举例：
+
+```python
+def eval_test(line):
+    line = repr(line)   #将tuple转化为str
+    lines = eval(line)  #将str转化为tuple
+    if isinstance(lines, tuple):      #判断是否为tuple类型
+        id = lines[0]
+        subjectList = eval(lines[1])　　#将str转化为list
+        sl_list = []
+        for sl in subjectList:
+            del sl["subject_type"]
+            del sl["code"]
+            del sl["subject_id"]
+            del sl["weight"]
+            del sl["concept_stock"]
+            del sl["second_relation"]
+            del sl["third_relation"]
+            sl_list.append(sl)
+        subject_manualList = eval(lines[2])
+        print(sl_list)
+        sm_list = []
+        for sm in subject_manualList:
+            del sm["subject_type"]
+            del sm["code"]
+            del sm["subject_id"]
+            del sm["weight"]
+            del sm["concept_stock"]
+            del sm["second_relation"]
+            del sm["third_relation"]
+            sm_list.append(sm)
+        print(sm_list)
+if __name__ == "__main__":
+    data = ('01e6bfd535f255c1651e72427149cefe', '[{"subject_id":"154","code":"600696.SH","third_relation":{},"subject_type":"股票","original_company_name":"p2p","concept_stock":"互联网+","second_relation":{},"subject_name":"ST岩石","weight":0.1790862502086199,"tags":[],"opinion":""}]', '[{"subject_id":"154","code":"600696.SH","third_relation":{},"subject_type":"股票","original_company_name":"p2p","concept_stock":"互联网+","second_relation":{},"subject_name":"ST岩石","weight":0.1790862502086199,"tags":[],"opinion":"0"}]')
+    eval_test(data)
+```
+
+## 运算符
+
+### 算数运算符
+
+| 运算符 | 描述                                            | 实例                                               |
+| ------ | ----------------------------------------------- | -------------------------------------------------- |
+| +      | 加 - 两个对象相加                               | a + b 输出结果 30                                  |
+| -      | 减 - 得到负数或是一个数减去另一个数             | a - b 输出结果 -10                                 |
+| *      | 乘 - 两个数相乘或是返回一个被重复若干次的字符串 | a * b 输出结果 200                                 |
+| /      | 除 - x除以y                                     | b / a 输出结果 2                                   |
+| %      | 取模 - 返回除法的余数                           | b % a 输出结果 0                                   |
+| **     | 幂 - 返回x的y次幂                               | a**b 为10的20次方， 输出结果 100000000000000000000 |
+| //     | 取整除 - 返回商的整数部分（**向下取整**）       | `>>> 9//2 4 >>> -9//2 -5`                          |
+
+### 比较运算符
+
+| 运算符 | 描述                                                         | 实例                                     |
+| ------ | ------------------------------------------------------------ | ---------------------------------------- |
+| ==     | 等于 - 比较对象是否相等                                      | (a == b) 返回 False。                    |
+| !=     | 不等于 - 比较两个对象是否不相等                              | (a != b) 返回 true.                      |
+| <>     | 不等于 - 比较两个对象是否不相等                              | (a <> b) 返回 true。这个运算符类似 != 。 |
+| >      | 大于 - 返回x是否大于y                                        | (a > b) 返回 False。                     |
+| <      | 小于 - 返回x是否小于y。所有比较运算符返回1表示真，返回0表示假。这分别与特殊的变量True和False等价。 | (a < b) 返回 true。                      |
+| >=     | 大于等于	- 返回x是否大于等于y。                           | (a >= b) 返回 False。                    |
+| <=     | 小于等于 -	返回x是否小于等于y。                           | (a <= b) 返回 true。                     |
+
+### 赋值运算符
+
+| 运算符 | 描述             | 实例                                  |
+| ------ | ---------------- | ------------------------------------- |
+| =      | 简单的赋值运算符 | c = a + b 将 a + b 的运算结果赋值为 c |
+| +=     | 加法赋值运算符   | c += a 等效于 c = c + a               |
+| -=     | 减法赋值运算符   | c -= a 等效于 c = c - a               |
+| *=     | 乘法赋值运算符   | c *= a 等效于 c = c * a               |
+| /=     | 除法赋值运算符   | c /= a 等效于 c = c / a               |
+| %=     | 取模赋值运算符   | c %= a 等效于 c = c % a               |
+| **=    | 幂赋值运算符     | c **= a 等效于 c = c ** a             |
+| //=    | 取整除赋值运算符 | c //= a 等效于 c = c // a             |
+
+### 位运算符
+
+| 运算符 | 描述                                                         | 实例                                                         |
+| ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| &      | 按位与运算符：参与运算的两个值,如果两个相应位都为1,则该位的结果为1,否则为0 | (a & b) 输出结果 12 ，二进制解释： 0000 1100                 |
+| \|     | 按位或运算符：只要对应的二个二进位有一个为1时，结果位就为1。 | (a \| b) 输出结果 61 ，二进制解释： 0011 1101                |
+| ^      | 按位异或运算符：当两对应的二进位相异时，结果为1              | (a ^ b) 输出结果 49 ，二进制解释： 0011 0001                 |
+| ~      | 按位取反运算符：对数据的每个二进制位取反,即把1变为0,把0变为1 。**~x** 类似于 **-x-1** | (~a ) 输出结果 -61 ，二进制解释： 1100 0011，在一个有符号二进制数的补码形式。 |
+| <<     | 左移动运算符：运算数的各二进位全部左移若干位，由 **<<** 右边的数字指定了移动的位数，高位丢弃，低位补0。 | a << 2 输出结果 240 ，二进制解释： 1111 0000                 |
+| >>     | 右移动运算符：把">>"左边的运算数的各二进位全部右移若干位，**>>** 右边的数字指定了移动的位数 | a >> 2 输出结果 15 ，二进制解释： 0000 1111                  |
+
+### 逻辑运算符
+
+| 运算符 | 逻辑表达式 | 描述                                                         | 实例                    |
+| ------ | ---------- | ------------------------------------------------------------ | ----------------------- |
+| and    | x and y    | 布尔"与" - 如果 x 为 False，x and y 返回 False，否则它返回 y 的计算值。 | (a and b) 返回 20。     |
+| or     | x or y     | 布尔"或"	- 如果 x 是非 0，它返回 x 的值，否则它返回 y 的计算值。 | (a or b) 返回 10。      |
+| not    | not x      | 布尔"非" - 如果 x 为 True，返回 False 。如果 x 为 False，它返回 True。 | not(a and b) 返回 False |
+
+### 成员运算符
+
+| 运算符 | 描述                                                    | 实例                                              |
+| ------ | ------------------------------------------------------- | ------------------------------------------------- |
+| in     | 如果在指定的序列中找到值返回 True，否则返回 False。     | x 在 y 序列中 , 如果 x 在 y 序列中返回 True。     |
+| not in | 如果在指定的序列中没有找到值返回 True，否则返回 False。 | x 不在 y 序列中 , 如果 x 不在 y 序列中返回 True。 |
+
+### 身份运算符
+
+| 运算符 | 描述                                        | 实例                                                         |
+| ------ | ------------------------------------------- | ------------------------------------------------------------ |
+| is     | is 是判断两个标识符是不是引用自一个对象     | **x is y**, 类似 **id(x) == id(y)** , 如果引用的是同一个对象则返回 True，否则返回 False |
+| is not | is not 是判断两个标识符是不是引用自不同对象 | **x is not y** ， 类似 **id(a) != id(b)**。如果引用的不是同一个对象则返回结果 True，否则返回 False。 |
+
+### 运算符优先级
+
+| 运算符                   | 描述                                                   |
+| ------------------------ | ------------------------------------------------------ |
+| **                       | 指数 (最高优先级)                                      |
+| ~ + -                    | 按位翻转, 一元加号和减号 (最后两个的方法名为 +@ 和 -@) |
+| * / % //                 | 乘，除，取模和取整除                                   |
+| + -                      | 加法减法                                               |
+| >> <<                    | 右移，左移运算符                                       |
+| &                        | 位 'AND'                                               |
+| ^ \|                     | 位运算符                                               |
+| <= < > >=                | 比较运算符                                             |
+| <> == !=                 | 等于运算符                                             |
+| = %= /= //= -= += *= **= | 赋值运算符                                             |
+| is is not                | 身份运算符                                             |
+| in not in                | 成员运算符                                             |
+| not and or               | 逻辑运算符                                             |
+
+## 条件语句
+
+```python
+if 判断条件：
+    执行语句……
+else：
+    执行语句……
+```
+
+pass表示空语句
+
+## 循环语句
+
+### while循环
+
+```python
+while 判断条件：
+    执行语句……
+```
+
+while 语句时还有另外两个重要的命令 continue，break 来跳过循环，
+
+continue 用于跳过该次循环，
+
+break 则是用于退出整个循环，
+
+pass表示空语句
+
+此外"判断条件"还可以是个常值，表示循环必定成立，具体用法如下：
+
+```python
+# continue 和 break 用法
+ 
+i = 1
+while i < 10:   
+    i += 1
+    if i%2 > 0:     # 非双数时跳过输出
+        continue
+    print i         # 输出双数2、4、6、8、10
+ 
+i = 1
+while 1:            # 循环条件为1必定成立
+    print i         # 输出1~10
+    i += 1
+    if i > 10:     # 当i大于10时跳出循环
+        break
+```
+
+### for循环
+
+```python
+for iterating_var in sequence:
+   statements(s)
+```
+
+For语句时还有另外两个重要的命令 continue，break 来跳过循环，
+
+continue 用于跳过该次循环，
+
+break 则是用于退出整个循环，
+
+pass表示空语句
+
+### 嵌套循环
 
 
-## 转移字符
-
-| 转义字符 | 输出               |
-| -------- | ------------------ |
-|          | '                  |
-| \"       | "                  |
-| \a       | ‘bi’响一声         |
-| \b       | 退格               |
-| \f       | 换页（在打印时）   |
-| \n       | 回车，光标在下一行 |
-| \r       | 换行，光标在上一行 |
-| \t       | 八个空格，即tab键  |
-| \\       | \                  |
 
 ##python数据结构
 
+### 数字
+
+Python 支持四种不同的数值类型：整型(Int)、长整型(long integers)、浮点型(floating point real values)、复数(complex numbers)。
+
+Python 中数学运算常用的函数基本都在 math 模块、cmath 模块中。
+
+Python math 模块提供了许多对浮点数的数学运算函数。
+
+Python cmath 模块包含了一些用于复数运算的函数。
+
+#### 数学函数
+
+| 函数                                                         | 返回值 ( 描述 )                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [abs(x)](https://www.runoob.com/python/func-number-abs.html) | 返回数字的绝对值，如abs(-10) 返回 10                         |
+| [ceil(x)](https://www.runoob.com/python/func-number-ceil.html) | 返回数字的上入整数，如math.ceil(4.1) 返回 5。                |
+| [cmp(x, y)](https://www.runoob.com/python/func-number-cmp.html) | 如果 x < y 返回 -1, 如果 x == y 返回 0, 如果 x > y 返回 1    |
+| [exp(x)](https://www.runoob.com/python/func-number-exp.html) | 返回e的x次幂(ex),如math.exp(1) 返回2.718281828459045         |
+| [fabs(x)](https://www.runoob.com/python/func-number-fabs.html) | 返回数字的绝对值，如math.fabs(-10) 返回10.0                  |
+| [floor(x)](https://www.runoob.com/python/func-number-floor.html) | 返回数字的下舍整数，如math.floor(4.9)返回 4                  |
+| [log(x)](https://www.runoob.com/python/func-number-log.html) | 如math.log(math.e)返回1.0,math.log(100,10)返回2.0            |
+| [log10(x)](https://www.runoob.com/python/func-number-log10.html) | 返回以10为基数的x的对数，如math.log10(100)返回 2.0           |
+| [max(x1, x2,...)](https://www.runoob.com/python/func-number-max.html) | 返回给定参数的最大值，参数可以为序列。                       |
+| [min(x1, x2,...)](https://www.runoob.com/python/func-number-min.html) | 返回给定参数的最小值，参数可以为序列。                       |
+| [modf(x)](https://www.runoob.com/python/func-number-modf.html) | 返回x的整数部分与小数部分，两部分的数值符号与x相同，整数部分以浮点型表示。 |
+| [pow(x, y)](https://www.runoob.com/python/func-number-pow.html) | x**y 运算后的值。                                            |
+| [round(x [,n\])](https://www.runoob.com/python/func-number-round.html) | 返回浮点数x的四舍五入值，如给出n值，则代表舍入到小数点后的位数。 |
+| [sqrt(x)](https://www.runoob.com/python/func-number-sqrt.html) | 返回数字x的平方根                                            |
+
+#### 随机数函数
+
+| 函数                                                         | 描述                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [choice(seq)](https://www.runoob.com/python/func-number-choice.html) | 从序列的元素中随机挑选一个元素，比如random.choice(range(10))，从0到9中随机挑选一个整数。 |
+| [randrange ([start,\] stop [,step])](https://www.runoob.com/python/func-number-randrange.html) | 从指定范围内，按指定基数递增的集合中获取一个随机数，基数缺省值为1 |
+| [random()](https://www.runoob.com/python/func-number-random.html) | 随机生成下一个实数，它在[0,1)范围内。                        |
+| [seed([x\])](https://www.runoob.com/python/func-number-seed.html) | 改变随机数生成器的种子seed。如果你不了解其原理，你不必特别去设定seed，Python会帮你选择seed。 |
+| [shuffle(lst)](https://www.runoob.com/python/func-number-shuffle.html) | 将序列的所有元素随机排序                                     |
+| [uniform(x, y)](https://www.runoob.com/python/func-number-uniform.html) | 随机生成下一个实数，它在[x,y]范围内。                        |
+
 ###数组
 
-**二维数组**
+### 列表
+
+#### 索引列表的值
+
+二维数组：
 
 ```python
 len(array)     #数组行数 row
 len(array[0])  #数组列数 column
 ```
 
+#### 更新列表
+
+可以对列表的数据项进行修改或更新，你也可以使用append()方法来添加列表项。
+
+#### 删除列表元素
+
+可以使用 del 语句来删除列表的元素
+
+#### 常用函数
+
+| 序号 | 函数                                                         |
+| ---- | ------------------------------------------------------------ |
+| 1    | [cmp(list1, list2)](https://www.runoob.com/python/att-list-cmp.html) 比较两个列表的元素 |
+| 2    | [len(list)](https://www.runoob.com/python/att-list-len.html) 列表元素个数 |
+| 3    | [max(list)](https://www.runoob.com/python/att-list-max.html) 返回列表元素最大值 |
+| 4    | [min(list)](https://www.runoob.com/python/att-list-min.html) 返回列表元素最小值 |
+| 5    | [list(seq)](https://www.runoob.com/python/att-list-list.html) 将元组转换为列表 |
+
+#### 常用方法
+
+| 序号 | 方法                                                         |
+| ---- | ------------------------------------------------------------ |
+| 1    | [list.append(obj)](https://www.runoob.com/python/att-list-append.html) 在列表末尾添加新的对象 |
+| 2    | [list.count(obj)](https://www.runoob.com/python/att-list-count.html) 统计某个元素在列表中出现的次数 |
+| 3    | [list.extend(seq)](https://www.runoob.com/python/att-list-extend.html) 在列表末尾一次性追加另一个序列中的多个值（用新列表扩展原来的列表） |
+| 4    | [list.index(obj)](https://www.runoob.com/python/att-list-index.html) 从列表中找出某个值第一个匹配项的索引位置 |
+| 5    | [list.insert(index, obj)](https://www.runoob.com/python/att-list-insert.html) 将对象插入列表 |
+| 6    | [list.pop([index=-1\])](https://www.runoob.com/python/att-list-pop.html) 移除列表中的一个元素（默认最后一个元素），并且返回该元素的值 |
+| 7    | [list.remove(obj)](https://www.runoob.com/python/att-list-remove.html) 移除列表中某个值的第一个匹配项 |
+| 8    | [list.reverse()](https://www.runoob.com/python/att-list-reverse.html) 反向列表中元素 |
+| 9    | [list.sort(cmp=None, key=None, reverse=False)](https://www.runoob.com/python/att-list-sort.html) 对原列表进行排序 |
+
 ###字符串
+
+#### 字符串运算符
+
+下表实例变量 a 值为字符串 "Hello"，b 变量值为 "Python"：
+
+| 操作符 | 描述                                                         | 实例                                 |
+| ------ | ------------------------------------------------------------ | ------------------------------------ |
+| +      | 字符串连接                                                   | >>>a + b 'HelloPython'               |
+| *      | 重复输出字符串                                               | >>>a * 2 'HelloHello'                |
+| []     | 通过索引获取字符串中字符                                     | >>>a[1] 'e'                          |
+| [ : ]  | 截取字符串中的一部分                                         | >>>a[1:4] 'ell'                      |
+| in     | 成员运算符 - 如果字符串中包含给定的字符返回 True             | >>>"H" in a True                     |
+| not in | 成员运算符 - 如果字符串中不包含给定的字符返回 True           | >>>"M" not in a True                 |
+| r/R    | 原始字符串 - 原始字符串：所有的字符串都是直接按照字面的意思来使用，没有转义特殊或不能打印的字符。 原始字符串除在字符串的第一个引号前加上字母"r"（可以大小写）以外，与普通字符串有着几乎完全相同的语法。 | >>>print r'\n' \n >>> print R'\n' \n |
+| %      | 格式字符串                                                   | 请看下一章节                         |
+
+#### 字符串格式化
+
+```python
+print "My name is %s and weight is %d kg!" % ('Zara', 21) 
+#输出：My name is Zara and weight is 21 kg!
+```
+
+python字符串格式化符号:
+
+| 符   号 | 描述                                 |
+| ------- | ------------------------------------ |
+| %s      | 格式化字符串                         |
+| %d      | 格式化整数                           |
+| %f      | 格式化浮点数字，可指定小数点后的精度 |
+
+#### Unicode 字符串
+
+Python 中定义一个 Unicode 字符串和定义一个普通字符串一样简单：
+
+```python
+u'Hello World !'
+#输出：u'Hello World !'
+```
 
 ####字符串方法
 
 链接：https://www.jianshu.com/p/b758332c44bb
 
-##### strip()       
+##### strip() 
 
 删除首尾某字符或空格
 
@@ -122,10 +518,7 @@ b_list = [1,2,3,4]
 print(' '.join(str(x) for x in b_list))
 #输出：1 2 3 4
 
-
 ```
-
-
 
 ##### replace()      
 
@@ -190,7 +583,130 @@ bubble_sql = bubble_sql_template.format(**params)
 bubble_df = spark.sql(bubble_sql).cache()
 ```
 
+##### count()
 
+功能：统计字符串里某个字符出现的次数。可选参数为在字符串搜索的开始与结束位置。
+
+语法：
+
+```python
+str.count(sub, start= 0,end=len(string))
+```
+
+实例:
+
+```python
+str.count(sub, 4, 40) :  2
+str.count(sub) :  1
+```
+
+##### find()
+
+功能：检测字符串中是否包含子字符串 str ，如果指定 beg（开始） 和 end（结束） 范围，则检查是否包含在指定范围内，
+
+语法：
+
+```python
+str.find(str, beg=0, end=len(string))
+```
+
+返回值：如果包含子字符串返回开始的索引值，否则返回-1。
+
+实例：
+
+```python
+#!/usr/bin/python   
+str1 = "this is string example....wow!!!" str2 = "exam"  
+print str1.find(str2)    #输出：15
+print str1.find(str2, 10)   #输出：15
+print str1.find(str2, 40)   #输出：-1
+```
+
+##### index()
+
+功能：检测字符串中是否包含子字符串 str ，如果指定 beg（开始） 和 end（结束） 范围，则检查是否包含在指定范围内，该方法与 python find()方法一样，只不过如果str不在 string中会报一个异常。
+
+语法：
+
+```python
+str.index(str, beg=0, end=len(string))
+```
+
+##### join()
+
+功能：用于将序列中的元素以指定的字符连接生成一个新的字符串。
+
+语法：
+
+```
+str.join(sequence)
+```
+
+实例：
+
+```python
+str = "-"
+seq = ("a", "b", "c")
+str.join( seq )    #输出：a-b-c
+```
+
+### 元组
+
+Python的元组与列表类似，不同之处在于元组的元素不能修改。元组使用小括号，列表使用方括号。
+
+```python
+#创建空元组
+tup1 = ()
+#元组中只包含一个元素时，需要在元素后面添加逗号
+tup1 = (50,)
+```
+
+#### 元组访问
+
+```python
+tup1 = ('physics', 'chemistry', 1997, 2000)
+tup2 = (1, 2, 3, 4, 5, 6, 7 )
+print "tup1[0]: ", tup1[0]
+print "tup2[1:5]: ", tup2[1:5]
+```
+
+#### 修改元组
+
+```python
+tup1 = (12, 34.56)
+tup2 = ('abc', 'xyz')
+ 
+# 以下修改元组元素操作是非法的。
+# tup1[0] = 100
+ 
+# 创建一个新的元组
+tup3 = tup1 + tup2
+print tup3
+```
+
+#### 删除元组
+
+元组中的元素值是不允许删除的，但我们可以使用del语句来删除整个元组。
+
+#### 元组运算符
+
+| Python 表达式                | 结果                         | 描述         |
+| ---------------------------- | ---------------------------- | ------------ |
+| len((1, 2, 3))               | 3                            | 计算元素个数 |
+| (1, 2, 3) + (4, 5, 6)        | (1, 2, 3, 4, 5, 6)           | 连接         |
+| ('Hi!',) * 4                 | ('Hi!', 'Hi!', 'Hi!', 'Hi!') | 复制         |
+| 3 in (1, 2, 3)               | True                         | 元素是否存在 |
+| for x in (1, 2, 3): print x, | 1 2 3                        | 迭代         |
+
+#### 常用函数
+
+| 序号 | 方法及描述                                                   |
+| ---- | ------------------------------------------------------------ |
+| 1    | [cmp(tuple1, tuple2)](https://www.runoob.com/python/att-tuple-cmp.html) 比较两个元组元素。 |
+| 2    | [len(tuple)](https://www.runoob.com/python/att-tuple-len.html) 计算元组元素个数。 |
+| 3    | [max(tuple)](https://www.runoob.com/python/att-tuple-max.html) 返回元组中元素最大值。 |
+| 4    | [min(tuple)](https://www.runoob.com/python/att-tuple-min.html) 返回元组中元素最小值。 |
+| 5    | [tuple(seq)](https://www.runoob.com/python/att-tuple-tuple.html) 将列表转换为元组。 |
 
 ### 字典
 
@@ -220,21 +736,24 @@ print(d)       #{'age': 21, 'name': 'Allen', 'gender': 'male'}
 
 ```python
 c = dict(name='Allen', age=14, gender='male')
-print(c)         #{'gender': 'male', 'name': 'Allen', 'age': 14}
+print(c)         
+#输出：{'gender': 'male', 'name': 'Allen', 'age': 14}
 ```
 
 - 字典键值元组表
 
 ```python
 e=dict([('name','Allen'),('age',21),('gender','male')])
-print(e)       #{'age': 21, 'name': 'Allen', 'gender': 'male'}
+print(e)       
+#输出：{'age': 21, 'name': 'Allen', 'gender': 'male'}
 ```
 
 - 所有的键值都相同，或者赋予初始值
 
 ```python
  f=dict.fromkeys(['height','weight'],'normal')
-print(f)      #{'weight': 'normal', 'height': 'normal'}
+print(f)      
+#输出：{'weight': 'normal', 'height': 'normal'}
 ```
 
 #### 字典访问
@@ -263,7 +782,23 @@ for k,v in dic.iteritems():
 　　print "dic[%s]="%k,v
 ```
 
-#### 字典基本操作
+#### 删除字典
+
+```python
+dict = {'Name': 'Runoob', 'Age': 7, 'Class': 'First'}
+ 
+del dict['Name'] # 删除键 'Name'
+dict.clear()     # 清空字典
+del dict         # 删除字典
+```
+
+#### 常用方法
+
+| 序号 | 函数及描述                                                   | 实例                                                         |
+| ---- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1    | len(dict) 计算字典元素个数，即键的总数。                     | `>>> dict = {'Name': 'Runoob', 'Age': 7, 'Class': 'First'} >>> len(dict) 3` |
+| 2    | str(dict) 输出字典，以可打印的字符串表示。                   | `>>> dict = {'Name': 'Runoob', 'Age': 7, 'Class': 'First'} >>> str(dict) "{'Name': 'Runoob', 'Class': 'First', 'Age': 7}"` |
+| 3    | type(variable) 返回输入的变量类型，如果变量是字典就返回字典类型。 | `>>> dict = {'Name': 'Runoob', 'Age': 7, 'Class': 'First'} >>> type(dict) <class 'dict'>` |
 
 ```python
 len(dict)		#返回字典中键值对的数量
@@ -276,60 +811,112 @@ print(dict.keys()) 　#输出所有键
 print(dict.values()) #s输出说有的键值
 ```
 
-#### 字典方法（待定）
+#### 常用函数
 
-##内置函数
+| 序号 | 函数及描述                                                   |
+| ---- | ------------------------------------------------------------ |
+| 1    | [radiansdict.clear()](https://www.runoob.com/python3/python3-att-dictionary-clear.html) 删除字典内所有元素 |
+| 2    | [radiansdict.get(key, default=None)](https://www.runoob.com/python3/python3-att-dictionary-get.html) 返回指定键的值，如果值不在字典中返回default值 |
+| 3    | [key in dict](https://www.runoob.com/python3/python3-att-dictionary-in.html) 如果键在字典dict里返回true，否则返回false |
+| 4    | [radiansdict.items()](https://www.runoob.com/python3/python3-att-dictionary-items.html) 以列表返回可遍历的(键, 值) 元组数组 |
+| 5    | [radiansdict.keys()](https://www.runoob.com/python3/python3-att-dictionary-keys.html) 返回一个迭代器，可以使用 list() 来转换为列表 |
+| 6    | [radiansdict.values()](https://www.runoob.com/python3/python3-att-dictionary-values.html) 返回一个迭代器，可以使用 list() 来转换为列表 |
 
-###eval()	repr()	isinstance()
+## 内置函数
 
-- isinstance()
+###  enumerate
 
-功能：判断一个对象是否是一个已知的类型
+enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中。
 
-- eval()
-
-功能：将字符串str转化为dict, list, tuple数据类型
-
-- repr()
-
-功能：和eval()相反，将dict, list, tuple数据类型转化为str
-
-举例：
+语法：
 
 ```python
-def eval_test(line):
-    line = repr(line)   #将tuple转化为str
-    lines = eval(line)  #将str转化为tuple
-    if isinstance(lines, tuple):      #判断是否为tuple类型
-        id = lines[0]
-        subjectList = eval(lines[1])　　#将str转化为list
-        sl_list = []
-        for sl in subjectList:
-            del sl["subject_type"]
-            del sl["code"]
-            del sl["subject_id"]
-            del sl["weight"]
-            del sl["concept_stock"]
-            del sl["second_relation"]
-            del sl["third_relation"]
-            sl_list.append(sl)
-        subject_manualList = eval(lines[2])
-        print(sl_list)
-        sm_list = []
-        for sm in subject_manualList:
-            del sm["subject_type"]
-            del sm["code"]
-            del sm["subject_id"]
-            del sm["weight"]
-            del sm["concept_stock"]
-            del sm["second_relation"]
-            del sm["third_relation"]
-            sm_list.append(sm)
-        print(sm_list)
-if __name__ == "__main__":
-    data = ('01e6bfd535f255c1651e72427149cefe', '[{"subject_id":"154","code":"600696.SH","third_relation":{},"subject_type":"股票","original_company_name":"p2p","concept_stock":"互联网+","second_relation":{},"subject_name":"ST岩石","weight":0.1790862502086199,"tags":[],"opinion":""}]', '[{"subject_id":"154","code":"600696.SH","third_relation":{},"subject_type":"股票","original_company_name":"p2p","concept_stock":"互联网+","second_relation":{},"subject_name":"ST岩石","weight":0.1790862502086199,"tags":[],"opinion":"0"}]')
-    eval_test(data)
+enumerate(sequence, [start=0])
 ```
+
+参数：
+
+- sequence -- 一个序列、迭代器或其他支持迭代对象。
+- start -- 下标起始位置。
+
+实例：
+
+1. 使用 enumerate() 方法的实例：
+
+```python
+seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+list(enumerate(seasons))
+[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+list(enumerate(seasons, start=1)) #下标从 1 开始
+[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+```
+
+2. 普通的 for 循环
+
+```python
+seq = ['one', 'two', 'three']
+for i, element in enumerate(seq):
+    print i, element
+'''
+0 one
+1 two
+2 three
+'''
+```
+
+
+
+\>>>i = 0 >>> seq = ['one', 'two', 'three'] >>> for element in seq: ...     print i, seq[i] ...     i +=1 ...  0 one 1 two 2 three
+
+## for 循环使用 enumerate
+
+\>>>seq = ['one', 'two', 'three'] >>> for i, element in enumerate(seq): ...     print i, element ...  0 one 1 two 2 three
+
+##日期和时间
+
+Python 提供了一个 time 和 calendar 模块可以用于格式化日期和时间。
+
+时间间隔是以秒为单位的浮点小数。
+
+每个时间戳都以自从1970年1月1日午夜（历元）经过了多长时间来表示。
+
+```python
+#获取当前时间
+import time
+ticks = time.time()
+print "当前时间戳为:", ticks
+#当前时间戳为: 1459994552.51
+```
+
+
+
+```python
+#1.获取时间
+#获取当前时间
+import datetime
+datetime.datetime.now()
+
+#获取前一周的时间
+import datetime
+time = datetime.datetime.now() - datetime.timedelta(days = 7)
+
+#设置开始结束时间
+end_date =  datetime.datetime.now() - datetime.timedelta(days = 9)
+start_date = end_date - datetime.timedelta(days = 7)
+
+#时间格式转换
+#datetime -> string
+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#输出：'2015-01-12 23:13:08'
+
+#datetime <- string
+datetime.datetime.strptime("2014-12-31 18:20:10", "%Y-%m-%d %H:%M:%S")
+#输出：datetime.datetime(2014, 12, 31, 18, 20, 10)
+
+
+```
+
+
 
 ##python异常处理
 
@@ -911,6 +1498,12 @@ data_list=data_ndarray.tolist()#list
 rdd = sc.textFile(file)
 df = rdd.toDF
 data_list = rdd.collect()
+
+#将list转化为dataframe
+from pandas.core.frame import DataFrame
+a=[[1,2,3,4],[5,6,7,8]]
+data=DataFrame(a)#这时候是以行为标准写入的
+data.rename(columns={0:'a',1:'b'},inplace=True)#注意这里0和1都不是字符串
 ```
 
 ### 查看数据
@@ -933,6 +1526,8 @@ df.T
 df.sort_index(axis=1, ascending=False)
 #通过值来分类
 df.sort_values(by='B')
+#多列排序
+df.sort_values(by=['A','B'],ascending=(True,False))
 #查看行数和列数
 df.shape()
 #查看索引、数据类型和内存信息
@@ -962,7 +1557,31 @@ df.iloc[3:5,0:2]  #3到5个样本的前两个字段
 
 #使用isin()方法来过滤数据
 df2[df2['E'].isin(['two','four'])]
+
+#过滤一定条件的数据
+twelve_test = datass[datass['twelvediff']==0]
 ```
+
+#### 分组统计
+
+相关链接：https://blog.csdn.net/bqw18744018044/article/details/80011090
+
+1. 统计两列数据出现的次数
+
+```python
+count = twelve_test.groupby(['twelve_bubble_cnt', 'twelve_bubble']).count()
+```
+
+2. 统计分组后的比重
+
+```python 
+count = datass.groupby(['twelve_bubble_cnt', 'twelve_bubble']).count()
+# reset_index，原行索引作为一列保留，列名为index
+count_all = count.reset_index()
+p = count_all.groupby(['twelve_bubble_cnt','twelve_bubble']).sum() / cou.groupby('twelve_bubble_cnt').sum()
+```
+
+
 
 ### 数据清理
 
@@ -1329,6 +1948,8 @@ plt.legend(loc = "best")#图例
 plt.show()
 ```
 
+### 条形图（分布）
+
 
 
 # python    json  
@@ -1549,6 +2170,34 @@ if __name__ == "__main__":
 ```
 
 在浏览器中输入：　http://127.0.0.1:8081/word2vec?n=1&word=iii
+
+
+
+# 数据处理
+
+## 数据格式
+
+```python
+#从hive中获取数据
+data = spark.sql(sql)
+data_df = data.toPandas()
+#将dataframe格式转换为list
+data_ndarray = np.array(data_df)#np.ndarray()
+data_list=data_ndarray.tolist()#list
+#对数据进行处理
+for i in range(len(data_list)):
+    data_list[i][0] = float(eval(data_list[i][1])['1.00_1'])
+    data_list[i][1] = float(eval(data_list[i][1])['1.00_2'])
+print data_list[:4]
+#奖list转换为dataframe格式
+from pandas.core.frame import DataFrame
+data_dp =DataFrame(data_list)
+data_dp.rename(columns={0:'ecr_you',1:'ecr_kuai',2:'label_you',3:'label_kuai'},inplace=True)
+#计算auc
+from sklearn.metrics import roc_auc_score
+print roc_auc_score(data_dp['label_you'], data_dp['ecr_you'])
+print roc_auc_score(data_dp['label_kuai'], data_dp['ecr_kuai'])
+```
 
 
 

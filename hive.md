@@ -153,6 +153,8 @@ if(boolean testCondition, T valueTrue, T valueFalseOrNull)
 
 --hive> select if(1=2,100,200) from dual;   返回：200
 --hive> select if(array_contains(t_cityid_list, b.city_id), 0, 1) is_out_city from table_name;
+--判断是否为空
+--hive> select if(order_id is NULL,0,1) from table_name;
 
 --2.条件判断函数：case
 --说明：如果 a 等于 b ，那么返回 c ；如果 a 等于 d ，那么返回 e ；否则返回 f
@@ -277,3 +279,35 @@ hive> select from_unixtime(unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss"),'H
 --cast(name as int)
 --hive> select cast(param['pre_total_fee'] as double) pre_total_fee_kuai from table_name;
 ```
+
+### 多条件连接
+
+```hive
+() n left join(...)m on n.a = m.a and n.b = m.b
+```
+
+### having条件
+
+在 SQL 中增加 HAVING 子句原因是，WHERE 关键字无法与合计函数一起使用。
+
+```hive
+select
+      distinct a.pid pid,
+      a.b_day date
+    from (
+        SELECT
+          --area,
+          pid,
+          concat(year,month,day) b_day,
+          count(distinct combine_bubble_id) as cnt
+        from gulfstream_dwd.dwd_order_prefee_show
+        where concat(year, month, day) between '20190603' and '20190610'
+        AND product_id in (3)
+        and area in (1)
+        group by pid,
+        --area,
+        concat(year,month,day)
+        having cnt < 50
+        ) a
+```
+
