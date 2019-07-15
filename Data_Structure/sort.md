@@ -287,12 +287,14 @@ class Tree(object):
         myStack = []
         node = root
         while node or myStack:
-            while node:                 #从根节点开始，一直找它的左子树
+            #从根节点开始，一直找它的左子树
+            while node:  
                 print node.elem,
                 myStack.append(node)
                 node = node.lchild
             node = myStack.pop()         #while结束表示当前节点node为空，即前一个节点没有左子树了
-            node = node.rchild           #开始查看它的右子树
+            #开始查看它的右子树
+            node = node.rchild    
 
 
     def middle_stack(self, root):

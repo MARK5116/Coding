@@ -471,6 +471,28 @@ $ ls                         #执行ls指令
 README xaa xad xag xab xae xah xac xaf xai    
 ```
 
+### awk
+
+AWK是一种处理文本文件的语言，是一个强大的文本分析工具。简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。
+
+参数：
+
+- -F fs or --field-separator fs
+  指定输入文件折分隔符，fs是一个字符串或者是一个正则表达式，如-F:。
+
+举例：
+
+1. awk -F  #-F相当于内置变量FS, 指定分割字符
+
+```shell
+echo base.yaml | awk -F "." '{print $1}'
+#输出：base
+echo base.yaml | awk -F "." '{print $1"\t"$2}'
+#输出：base	yaml
+```
+
+
+
 ## 文档编辑
 
 ### grep
