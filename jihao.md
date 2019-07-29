@@ -1,3 +1,7 @@
+# 秋招
+
+
+
 JD	job description	指职位描述
 
 PR	public relations	公关
@@ -705,3 +709,9 @@ Sigmoid的函数表达式如下：
 
 3. 什么是池化pool层
 
+
+
+1. 有一定的代码能力，熟悉python、Scala、sql等编程语言。
+2. 对机器学习算法有一定的了解。
+3. 对一定的实习经历，有一定的抗压能力。
+4. 
