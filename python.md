@@ -1,5 +1,9 @@
 # python基础
 
+## 浅拷贝／深拷贝
+
+<https://www.runoob.com/w3cnote/python-understanding-dict-copy-shallow-or-deep.html>
+
 ## 数据格式转换
 
 ### DataFrame - list
@@ -404,7 +408,9 @@ Python cmath 模块包含了一些用于复数运算的函数。
 
 ###数组
 
-### 列表
+### 列表List
+
+特点：可重复，类型可不同。
 
 #### 索引列表的值
 
@@ -678,9 +684,9 @@ seq = ("a", "b", "c")
 str.join( seq )    #输出：a-b-c
 ```
 
-### 元组
+### 元组Tuple
 
-Python的元组与列表类似，不同之处在于元组的元素不能修改。元组使用小括号，列表使用方括号。
+Python的元组与列表类似，不同之处在于元组是只读的，不能修改。元组用“()”表示。
 
 ```python
 #创建空元组
@@ -736,11 +742,16 @@ print tup3
 | 4    | [min(tuple)](https://www.runoob.com/python/att-tuple-min.html) 返回元组中元素最小值。 |
 | 5    | [tuple(seq)](https://www.runoob.com/python/att-tuple-tuple.html) 将列表转换为元组。 |
 
-### 字典
+### 字典Dict
 
 列表适合于将值组织到一个结构中，可以通过编号进行引用；然而字典可以通过名字来引用值。字典也可以称为映射。
 
-字典是无序的对象集合，通过键值存取的。字典用：“{}”标识，由键（key）和键值（value）组成。键(key)必须使用不可变类型。在同一个字典中，键(key)必须是唯一的。
+字典是无序的对象集合，通过键值存取的。字典用：“{}”标识，由键（key）和键值（value）组成。
+
+- 键(key)必须使用不可变类型。在同一个字典中，键(key)必须是唯一的。
+
+- 在单个 dictionary 里，dictionary 的值并不需要全都是同一数据类型，可以根据需要混用和匹配。
+- Dictionary 的值可以是任意数据类型，包括字符串、整数、对象，甚至其它的 dictionary。
 
 #### 创建字典
 
@@ -849,6 +860,10 @@ print(dict.values()) #s输出说有的键值
 | 4    | [radiansdict.items()](https://www.runoob.com/python3/python3-att-dictionary-items.html) 以列表返回可遍历的(键, 值) 元组数组 |
 | 5    | [radiansdict.keys()](https://www.runoob.com/python3/python3-att-dictionary-keys.html) 返回一个迭代器，可以使用 list() 来转换为列表 |
 | 6    | [radiansdict.values()](https://www.runoob.com/python3/python3-att-dictionary-values.html) 返回一个迭代器，可以使用 list() 来转换为列表 |
+
+### 集合Set
+
+是一个无序不重复元素集, 基本功能包括关系测试和消除重复元素. 集合对象还支持union(联合), intersection(交), difference(差)和sysmmetric difference(对称差集)等数学运算。
 
 ## 内置函数
 

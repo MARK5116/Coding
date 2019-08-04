@@ -1,3 +1,5 @@
+# awk、grep、sed是linux操作文本的三大利器，合称文本三剑客，也是必须掌握的linux命令之一
+
 # 特殊应用
 
 scp -P 8022 luban@10.84.179.170:/nfs/private/jihao/git/billing_item/script/cross_city/all_city_order.csv ./jihao
