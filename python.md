@@ -40,10 +40,6 @@ data_rdd = data_rdd.map(lambda p: Row(trace_id=p[0], label=p[1], ecr=p[2], subsi
 data_df = spark.createDataFrame(data_rdd)
 ```
 
-
-
-
-
 ## 常用技巧
 
 **整数输出格式：**
