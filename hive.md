@@ -101,120 +101,15 @@ Stored as textfile
 
 ## 常用的hiveQL函数
 
-###解析json字符串
+### 集合统计函数
 
-```sql
-get_json_object(string json_string, string path)
---说明：第一个参数填写json对象变量
--- 第二个参数使用$表示json变量标识，然后用 . 或 [] 读取对象或数组；如果输入的json字符串无效，那么返回NULL。 
--- 每次只能返回一个数据项。
-```
-
-举例：data 为 test表中的字段，数据结构如下：
-
-```sql
-data =
-{
- "store":
-        {
-         "fruit":[{"weight":8,"type":"apple"}, {"weight":9,"type":"pear"}],  
-         "bicycle":{"price":19.95,"color":"red"}
-         }, 
- "email":"amy@only_for_json_udf_test.net", 
- "owner":"amy" 
-}
-
---比如：
---hive>select get_json_object(data, '$.owner') from test;
---hive>select get_json_object(data, '$.store.fruit[0].weitht') from test;
-```
-
-```sql
-hive> select coalesce(get_json_object(param['dynamic_price'], '${'$'}.600.noncarpool'), get_json_object(param['dynamic_price'],'${'$'}.600')) dynamic_price from table_name
-
-```
-
-
-
-###条件判断函数
-
-`collect_list(name)`
-
-将name组成一个list，函数返回的类型是array< ？ >类型，？表示该列的类型，如果去重，使用`collect_set()`
-
-`array_contains(array arr, element)`
-
-判断元素是否存在与array列表中。
-
-```sql
---1.if
---说明:  当条件testCondition为TRUE时，返回valueTrue；否则返回valueFalseOrNull
-if(boolean testCondition, T valueTrue, T valueFalseOrNull)
-
---hive> select if(1=2,100,200) from dual;   返回：200
---hive> select if(array_contains(t_cityid_list, b.city_id), 0, 1) is_out_city from table_name;
---判断是否为空
---hive> select if(order_id is NULL,0,1) from table_name;
-
---2.条件判断函数：case
---说明：如果 a 等于 b ，那么返回 c ；如果 a 等于 d ，那么返回 e ；否则返回 f
-CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END，
-
---hive> Select case 100 when 50 then 'tom' when 100 then 'mary' else 'tim' end from dual;
---hive> select case when...
-
---3.非空查找函数：COALESCE
---语法: COALESCE(T v1, T v2, …)   返回值: T
---说明:  返回参数中的第一个非空值；如果所有值都为NULL，那么返回NULL
-
-hive> select COALESCE(null,'100','50′) from dual;  --输出：100
-```
-
-###字段合并
-
-```sql
---将两个字段合并成一个字段
-concat(year, month, day) between '20181026' and '20181026'
-
-hive> select concat(a, '_', b) from tablename;
-```
-
-###关系运算
-
-```sql
---1.等值比较: =
-
---2.不等值比较: <> 或者 !=
-
---3.空值判断: IS NULL
-
---4.非空判断: IS NOTNULL
-
---5.LIKE比较: LIKE
---注意：否定比较时候用NOT ALIKE B
-
-```
-
-###逻辑操作符
-
-```sql
---1.A AND B
-
---2.A && B
-
---3.A || B
-
---4. ! A
-
---5.A IN (val1, val2, ...)
---若A与任意值相等则返回true。
-
---6.A NOT IN (val1, val2, ...)
-
---7.[NOT] EXISTS (subquery)
-```
-
-###集合统计函数
+| 函数    | 说明               |      |
+| ------- | ------------------ | ---- |
+| avg()   | 忽略列值为Null的行 |      |
+| count() | 忽略列值为Null的行 |      |
+| max()   |                    |      |
+| min()   |                    |      |
+| sum()   |                    |      |
 
 ```sql
 --1. 个数统计函数: count
@@ -254,7 +149,142 @@ hive> select histogram_numeric(100,5) from lxw_dual;
 [{"x":100.0,"y":1.0}]
 ```
 
-###hive日期时间格式转换
+### 分组数据
+
+1. group by 数据分组
+
+group by 必须在where之后，order by 之前。
+
+2. having 过滤分组
+
+与where区别：where过滤行，在数据分组前进行过滤；having过滤分组，在数据分组后进行过滤。
+
+```sql
+-- 列出至少有两个订单的顾客
+select
+    cust_id,
+    count(*) as order
+from Order
+group by cust_id
+having count(*) >= 2
+```
+
+
+
+### 解析json字符串
+
+```sql
+get_json_object(string json_string, string path)
+--说明：第一个参数填写json对象变量
+-- 第二个参数使用$表示json变量标识，然后用 . 或 [] 读取对象或数组；如果输入的json字符串无效，那么返回NULL。 
+-- 每次只能返回一个数据项。
+```
+
+举例：data 为 test表中的字段，数据结构如下：
+
+```sql
+data =
+{
+ "store":
+        {
+         "fruit":[{"weight":8,"type":"apple"}, {"weight":9,"type":"pear"}],  
+         "bicycle":{"price":19.95,"color":"red"}
+         }, 
+ "email":"amy@only_for_json_udf_test.net", 
+ "owner":"amy" 
+}
+
+--比如：
+--hive>select get_json_object(data, '$.owner') from test;
+--hive>select get_json_object(data, '$.store.fruit[0].weitht') from test;
+```
+
+```sql
+hive> select coalesce(get_json_object(param['dynamic_price'], '${'$'}.600.noncarpool'), get_json_object(param['dynamic_price'],'${'$'}.600')) dynamic_price from table_name
+
+```
+
+
+
+### 条件判断函数
+
+`collect_list(name)`
+
+将name组成一个list，函数返回的类型是array< ？ >类型，？表示该列的类型，如果去重，使用`collect_set()`
+
+`array_contains(array arr, element)`
+
+判断元素是否存在与array列表中。
+
+```sql
+--1.if
+--说明:  当条件testCondition为TRUE时，返回valueTrue；否则返回valueFalseOrNull
+if(boolean testCondition, T valueTrue, T valueFalseOrNull)
+
+--hive> select if(1=2,100,200) from dual;   返回：200
+--hive> select if(array_contains(t_cityid_list, b.city_id), 0, 1) is_out_city from table_name;
+--判断是否为空
+--hive> select if(order_id is NULL,0,1) from table_name;
+
+--2.条件判断函数：case
+--说明：如果 a 等于 b ，那么返回 c ；如果 a 等于 d ，那么返回 e ；否则返回 f
+CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END，
+
+--hive> Select case 100 when 50 then 'tom' when 100 then 'mary' else 'tim' end from dual;
+--hive> select case when...
+
+--3.非空查找函数：COALESCE
+--语法: COALESCE(T v1, T v2, …)   返回值: T
+--说明:  返回参数中的第一个非空值；如果所有值都为NULL，那么返回NULL
+
+hive> select COALESCE(null,'100','50′) from dual;  --输出：100
+```
+
+### 字段合并
+
+```sql
+--将两个字段合并成一个字段
+concat(year, month, day) between '20181026' and '20181026'
+
+hive> select concat(a, '_', b) from tablename;
+```
+
+### 关系运算
+
+```sql
+--1.等值比较: =
+
+--2.不等值比较: <> 或者 !=
+
+--3.空值判断: IS NULL
+
+--4.非空判断: IS NOTNULL
+
+--5.LIKE比较: LIKE
+--注意：否定比较时候用NOT ALIKE B
+
+```
+
+### 逻辑操作符
+
+```sql
+--1.A AND B
+
+--2.A && B
+
+--3.A || B
+
+--4. ! A
+
+--5.A IN (val1, val2, ...)
+--若A与任意值相等则返回true。
+
+--6.A NOT IN (val1, val2, ...)
+
+--7.[NOT] EXISTS (subquery)
+```
+
+### hive日期时间格式转换
 
 `unix_timestamp()`是hive系统时间，格式是timestamp，精确到秒。
  `unix_timestamp(ymdhms)`是把时间转换成timestamp格式，是`2018-05-23 07:15:50`格式。
@@ -273,7 +303,7 @@ hive> select from_unixtime(unix_timestamp(preshow_time,"yyyy-MM-dd HH:mm:ss"),'H
 -- 输出：20111208
 ```
 
-###数据类型转换
+### 数据类型转换
 
 ```sql
 --cast(name as int)

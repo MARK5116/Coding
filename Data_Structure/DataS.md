@@ -1,3 +1,25 @@
+# 常用算法思想
+
+## 贪心算法
+
+基本概念：
+
+贪心算法是指：在每一步求解的步骤中，它要求“贪婪”的选择最佳操作，并希望通过一系列的最优选择，能够产生一个问题的（全局的）最优解。
+
+ 
+
+贪心算法每一步必须满足一下条件：
+
+1、可行的：即它必须满足问题的约束。
+
+2、局部最优：他是当前步骤中所有可行选择中最佳的局部选择。
+
+3、不可取消：即选择一旦做出，在算法的后面步骤就不可改变了。
+
+例题：
+
+1. 53. Maximum Subarray（求最大子数组之和问题）[link](#53. Maximum Subarray)
+
 #  二分查找
 
 查找key是否存在数组中，数组必须有序。
@@ -16,8 +38,6 @@ def rank(key,array):
             return mid
     return -1
 ```
-
-
 
 # 排序
 
@@ -245,6 +265,14 @@ def heap_sort(heap):
         max_heapify(heap, i, 0)
     return heap   
 ```
+
+# 堆栈
+
+
+
+例题：
+
+1. 224. Basic Calculator [link](#224. Basic Calculator)
 
 # 二叉树
 
@@ -513,7 +541,6 @@ if __name__ == '__main__':
     tree.middle_stack(tree.root)
     print '\n堆栈实现后序遍历:'
     tree.later_stack(tree.root)
-
 ```
 
 ## 剑指 offer
@@ -627,6 +654,15 @@ https://blog.csdn.net/zl87758539/article/details/51676108
 
 
 # 字符串
+
+s为字符串
+s.isalnum() 所有字符都是数字或者字母
+s.isalpha() 所有字符都是字母
+s.isdigit() 所有字符都是数字
+s.islower() 所有字符都是小写
+s.isupper() 所有字符都是大写
+s.istitle() 所有单词都是首字母大写，像标题
+s.isspace() 所有字符都是空白字符、\t、\n、\r
 
 ## 常用方法
 
@@ -761,6 +797,8 @@ l.traveList()
 
 1. Merge Two Sorted Lists
 
+234. 回文链表[link](#234.Palindrome Linked List)
+
 # 哈希表（Hash table）
 
 使用哈希表可以进行非常快速的查找操作，查找时间为常数，同时不需要元素排列有序；python的内建数据类型：字典，就是用哈希表实现的。
@@ -773,7 +811,52 @@ python中的这些东西都是哈希原理：字典(dictionary)、集合(set)、
 
 # leetcode
 
-#### 128. 最长连续序列
+### 53. Maximum Subarray
+
+原文链接：https://blog.csdn.net/qq_37466121/article/details/85270073
+
+题目要求 （高频题）
+给定一个整数数组nums，找到具有最大和的连续子数组（包含至少一个数字）并返回其和。
+
+示例
+Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
+
+思路方法
+
+贪心算法思想： 设置两个变量，一个用来存储局部最优值，一个用来比较全局最优值。
+
+所以问题就变成了，我们怎么去求当前的局部最优值和全局最优。
+
+局部最优：就是以当前遍历元素为结尾的最大子数组
+
+算法精髓
+
+- 局部最优有两种可能：一个是当前局部最优 + 当前遍历元素；另一个就只是当前遍历元素。
+
+- 然后全局最优就是在，上边选出的局部最优和当前全局最优中进行比较，取更大的，即可。然后对每个元素都进行上述两个操作，返回最大子数组的和。
+
+一次遍历即可完成，时间复杂度O(n), 空间复杂度O(1)，妥妥的解决此类问题！
+
+
+
+```python
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        #贪心算法
+        sub_max = all_max = -2**32
+        for key in nums:
+            sub_max = max(sub_max+key, key)
+            all_max = max(sub_max,all_max)
+        return all_max
+```
+
+### 128. 最长连续序列
 
 https://leetcode-cn.com/problems/longest-consecutive-sequence/
 
@@ -811,5 +894,149 @@ def longestConsecutive(nums):
         hash_dict[key+right] = 1 + left + right
         maxlength = max(maxlength, hash_dict[key]） 
     return maxlength                
+```
+
+### 224. Basic Calculator
+
+原文链接：https://blog.csdn.net/fuxuemingzhu/article/details/84133441
+
+题目描述：
+Implement a basic calculator to evaluate a simple expression string.
+
+The expression string may contain open ( and closing parentheses ), the plus + or minus sign -, non-negative integers and empty spaces .
+
+Example 1:
+
+Input: "1 + 1"
+Output: 2
+Example 2:
+
+Input: " 2-1 + 2 "
+Output: 3
+Example 3:
+
+Input: "(1+(4+5+2)-3)+(6+8)"
+Output: 23
+Note:
+
+You may assume that the given expression is always valid.
+Do not use the eval built-in library function.
+题目大意：
+实现一个基本计算器，输入的是只含有括号数字加减号的字符串。
+
+解题方法：
+栈
+这个题没有乘除法，也就少了计算优先级的判断了。众所周知，实现计算器需要使用一个栈，来保存之前的结果，把后面的结果计算出来之后，和栈里的数字进行操作。
+
+使用了res表示不包括栈里数字在内的结果，num表示当前操作的数字，sign表示运算符的正负，用栈保存遇到括号时前面计算好了的结果和运算符。
+
+操作的步骤是：
+
+- 如果当前是数字，那么更新计算当前数字；
+- 如果当前是操作符+或者-，那么需要更新计算当前计算的结果res，并把当前数字num设为0，sign设为正负，重新开始；
+- 如果当前是(，那么说明后面的小括号里的内容需要优先计算，所以要把res，sign进栈，更新res和sign为新的开始；
+- 如果当前是)，那么说明当前括号里的内容已经计算完毕，所以要把之前的结果出栈，然后计算整个式子的结果；
+- 最后，当所有数字结束的时候，需要把结果进行计算，确保结果是正确的。
+
+```python
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        stack = []
+        res,num,sign = 0,0,1
+        for key in s:
+            if key.isdigit():
+                num = num*10 + int(key)
+            elif key == '+' or key == '-':
+                res = res + num*sign
+                num = 0
+                sign = 1 if key == '+' else -1
+            elif key == '(':
+                stack.append(res)
+                stack.append(sign)
+                res = 0
+                sign = 1
+            elif key == ')':
+                res = res + num*sign
+                num = 0
+                res *= stack.pop()
+                res += stack.pop()
+                
+        res = res + num*sign
+        return res
+```
+
+
+
+### 234.Palindrome Linked List
+
+https://blog.csdn.net/weixin_36372879/article/details/82596003
+
+Given a singly linked list, determine if it is a palindrome.
+
+**Example 1:**
+
+```
+Input: 1->2
+Output: false
+```
+
+**Example 2:**
+
+```
+Input: 1->2->2->1
+Output: true
+```
+
+要求：时间复杂度O(N),空间复杂度O(1)
+
+思路：
+
+1. 采用快慢指针来找到链表中点
+2. 找到中点之后，采用空间复杂度O(1)的反转链表的算法，将链表反转，需要注意的是，反转过程中语句的顺序，head = head.next一定要在第二句，而不是最后，要不然就断链了，因为p指向了head更改p相当于更改了head,当head指向next之后，才能更改p
+3. 最后判读反转后的链表和原来的链表的val值进行比较。
+
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def reverlist(self, head):
+        new_head = None
+        while head:
+            p = head
+            head = head.next
+            p.next = new_head
+            new_head = p
+            
+        return new_head
+    
+    def isPalindrome(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if head == None:
+            return True
+        fast = slow = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        if fast:
+            
+            slow = slow.next
+        new_head = self.reverlist(slow)
+        while new_head:
+            if new_head.val != head.val:
+                return False
+            new_head = new_head.next
+            head = head.next
+        return True
 ```
 
