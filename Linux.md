@@ -20,6 +20,26 @@ cat res | python Format_conversion.py
 
 mvn clean package
 
+## 创建可执行文件
+
+1、创建.sh文件 ：执行touch filename.sh 
+
+2、往生成的filename.sh文件中添加命令
+
+3、给.sh命令添加可执行权限 chmod 777 filename.sh
+
+4、在终端中直接执行命令 ./filename.sh 即可。（当当前目录与命令所在目录不一致时，需要在命令前加上命令的路径）
+
+5、filename.sh不加后缀名可实现双击执行
+
+附：
+
+1、命令touch的使用
+
+2、命令chmod的使用与‘777’含义
+
+3、将命令设置为全局命令
+
 # linux后台运行和关闭、查看后台任务
 
 fg、bg、jobs、&、nohup、ctrl+z、ctrl+c 命令

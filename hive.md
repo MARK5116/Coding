@@ -12,8 +12,6 @@ https://www.cnblogs.com/xwdreamer/archive/2012/06/01/2530597.html
 select * from A left join B on A.id=B.id where B.id is null
 ```
 
-
-
 ## 常用命令
 
 ###查看分区
@@ -169,7 +167,24 @@ group by cust_id
 having count(*) >= 2
 ```
 
+### limit
 
+limit子句用于限制查询结果返回的数量。
+
+**用法**：`select * from tableName limit i,n `
+
+参数：
+
+- i : 为查询结果的索引值（默认从0开始）；
+- n : 为查询结果返回的数量
+
+举例：
+
+1. 查询第二条数据
+
+```sql
+select * from student limit 1,1;
+```
 
 ### 解析json字符串
 

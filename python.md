@@ -449,6 +449,24 @@ len(array[0])  #数组列数 column
 | 8    | [list.reverse()](https://www.runoob.com/python/att-list-reverse.html) 反向列表中元素 |
 | 9    | [list.sort(cmp=None, key=None, reverse=False)](https://www.runoob.com/python/att-list-sort.html) 对原列表进行排序 |
 
+##### extend()
+
+功能：extend() 函数用于在列表末尾一次性追加另一个序列中的多个值。
+
+实例：
+
+```python
+#!/usr/bin/python
+
+aList = [123, 'xyz', 'zara', 'abc', 123]
+bList = [2009, 'manni']
+aList.extend(bList)
+print "Extended List : ", aList 
+#输出：Extended List :  [123, 'xyz', 'zara', 'abc', 123, 2009, 'manni']
+```
+
+
+
 ###字符串
 
 #### 字符串运算符
@@ -793,6 +811,39 @@ print(f)
 
 #### 字典访问
 
+`dict1={'a':2,'b':3,'c':8,'d':4}`
+
+1. 分别取键、值
+
+取字典的所有键，所有的值，利用dict1.keys()，dict1.vaules()。
+
+输出是一个列表的对象。
+
+```python
+dict1={'a':2,'b':3,'c':8,'d':4}
+print(dict1.values(),dict1.keys())
+#输出：dict_values([2, 3, 8, 4]) dict_keys(['a', 'b', 'c', 'd'])
+v = dict1.values()    #输出是一个列表的对象。
+print(len(v))    #输出：4
+print(type(v))   #输出：<class 'dict_values'>
+print(list(v))   #输出：[2, 3, 8, 4]
+```
+
+2. 同时取键、值
+
+同时取字典的键、值，dict1.items()。
+
+输出是一个元组组成的列表的对象。
+
+```python 
+t = dict1.items()
+print(t)             #输出：dict_items([('a', 2), ('b', 3), ('c', 8), ('d', 4)])
+print(type(t))       #输出：<class 'dict_items'>
+print(list(t))      #输出：[('a', 2), ('b', 3), ('c', 8), ('d', 4)]
+```
+
+
+
 `dic = {'a':"hello",'b':"how",'c':"you"}`
 
 - 方法一
@@ -845,6 +896,49 @@ print(dict)     #输出整个字典
 print(dict.keys()) 　#输出所有键
 print(dict.values()) #s输出说有的键值
 ```
+
+#### 字典排序
+
+sorted()默认是对字典的键，从小到大进行排序
+
+1. 对键排序
+
+```python 
+#对键正向排序
+dict1={'a':2,'e':3,'f':8,'d':4}
+dict2 = sorted(dict1)
+print(dict2)     #输出：['a', 'd', 'e', 'f']
+
+#对键反向排序
+#方法一
+dict3 = sorted(dict1,reverse=True)
+print(dict3)     #输出：['f', 'e', 'd', 'a']
+#方法二
+list4= sorted(dict1.keys(),reverse=True)
+print(list4)     #输出：['f', 'e', 'd', 'a']
+```
+
+2. 对值排序
+
+可以用dict1.items()，得到包含键，值的元组，
+
+由于迭代对象是元组，返回值自然是元组组成的列表，
+
+这里对排序的规则进行了定义，x指元组，x[1]是值，x[0]是键
+
+```python
+#对值正向排序
+#方法一
+dict1={'a':2,'e':3,'f':8,'d':4}
+list2= sorted(dict1.values())
+print(list2)     #输出：[2, 3, 4, 8]
+
+#方法二
+list3= sorted(dict1.items(),key=lambda x:x[1])
+print(list3)     #输出：[('a', 2), ('e', 3), ('d', 4), ('f', 8)]
+```
+
+
 
 #### 常用函数
 
