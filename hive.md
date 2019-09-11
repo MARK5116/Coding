@@ -356,3 +356,45 @@ select
         ) a
 ```
 
+### ROW_NUMBER() OVER函数
+
+基本使用：https://www.cnblogs.com/liuzhenlei/p/8026278.html
+
+语法：ROW_NUMBER() OVER(PARTITION BY COLUMN ORDER BY COLUMN)
+
+理解：
+
+简单的说row_number()从1开始，为每一条分组记录返回一个数字，这里的ROW_NUMBER() OVER (ORDER BY xlh DESC) 是先把xlh列降序，再为降序以后的每条xlh记录返回一个序号。
+
+row_number() OVER (PARTITION BY COL1 ORDER BY COL2)
+
+ 表示根据COL1分组，在分组内部根据 COL2排序，而此函数计算的值就表示每组内部排序后的顺序编号（组内连续的唯一的)。
+
+相关应用链接：https://blog.csdn.net/qq_25221835/article/details/82762416
+
+举例：
+
+1. 如何查询各个用户最长的连续登陆天数？
+
+原题：https://bbs.csdn.net/topics/392243867
+
+```sql
+SELECT  
+  [UID],
+  COUNT(*) AS 记录数
+FROM ( 
+    SELECT  
+      *,
+      RN1 - ROW_NUMBER() OVER ( PARTITION BY [UID] ORDER BY RN1 ) AS Grp
+    FROM( 
+        SELECT  
+          *,
+          ROW_NUMBER() OVER ( ORDER BY RAND() ) AS RN1 
+        FROM table
+        ) AS t
+     ) AS t2
+GROUP BY [UID],
+t2.Grp 
+order by min ([RN1]);
+```
+

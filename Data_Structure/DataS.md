@@ -20,6 +20,106 @@
 
 1. 53. Maximum Subarray（求最大子数组之和问题）[link](#53. Maximum Subarray)
 
+## 排列组合
+
+```python
+import math
+value = math.factorial(3)
+print(value)
+
+def A_n_m(n,m):
+    temp1=math.factorial(n)
+    temp2=math.factorial(n-m)
+    return(int(temp1/temp2))
+    
+def C_n_m(n,m):
+    temp1=A_n_m(n,m)
+    temp2=A_n_m(m,m)
+    return(int(temp1/temp2))
+    
+n=5
+m=2
+  
+re=C_n_m(n,m)
+print(re)
+```
+
+## 动态规划
+
+### 背包问题
+
+```python 
+def dp_bag(n, c, w, v):
+    """
+    测试数据：
+    n = 6  物品的数量，
+    c = 10 书包能承受的重量，
+    w = [2, 2, 3, 1, 5, 2] 每个物品的重量，
+    v = [2, 3, 1, 5, 4, 3] 每个物品的价值
+    """
+    # 置零，表示初始状态
+    #j为当前的背包容量，前 i 个物品最佳组合对应的价值
+    value = [[0 for j in range(c + 1)] for i in range(n + 1)]
+    for i in range(1, n + 1):
+        for j in range(1, c + 1):
+            value[i][j] = value[i - 1][j]
+            # 背包总容量够放当前物体，遍历前一个状态考虑是否置换
+            if j>= w[i-1] and value[i][j]<value[i-1][j-w[i-1]]+v[i-1]:
+                value[i][j] = value[i-1][j-w[i-1]] + v[i-1]
+
+    return value
+
+```
+
+常见问题：
+
+1. Leetcode 62. 不同路径 [link](#62. Unique Paths)
+2. Leetcode 63 不同路径（有障碍物）[link](#63. Unique Paths II)
+3. Leetcode 64最小路径和 [link](#64. Minimum Path Sum)
+
+## 递归
+
+常见问题：
+
+1. Leetcode101. 对称树[link](#101. Symmetric Tree)
+2. leetcode100 相同树[link](#100. Same Tree)
+
+## 深度优先搜索（DFS）
+
+相关链接：https://www.jianshu.com/p/bff70b786bb6
+
+https://blog.csdn.net/victoryshen/article/details/80227222
+
+https://blog.csdn.net/qq_40276310/article/details/80668401
+
+https://blog.csdn.net/weixin_43272781/article/details/82959089
+
+https://www.cnblogs.com/George1994/p/6346751.html
+
+理解：
+
+深度优先搜索属于图算法的一种，是一个针对图和树的遍历算法，英文缩写为DFS即Depth First Search。
+
+深度优先搜索是图论中的经典算法，利用深度优先搜索算法可以产生目标图的相应拓扑排序表，利用拓扑排序表可以方便的解决很多相关的图论问题，如最大路径问题等等。一般用堆数据结构来辅助实现DFS算法。
+
+其过程简要来说是对每一个可能的分支路径深入到不能再深入为止，而且每个节点只能访问一次。
+
+过程：
+
+图的深度优先搜索(Depth First Search, DFS)，和树的前序遍历非常类似。
+
+1.从顶点v出发，首先访问该顶点;
+
+2.然后依次从它的各个未被访问的邻接点出发深度优先搜索遍历图;
+
+3.直至图中所有和v有路径相通的顶点都被访问到。
+
+4.若此时尚有其他顶点未被访问到，则另选一个未被访问的顶点作起始点，重复上述过程，直至图中所有顶点都被访问到为止。
+
+常见问题：
+
+1. 树是否对称[link](#101. Symmetric Tree)
+
 #  二分查找
 
 查找key是否存在数组中，数组必须有序。
@@ -296,10 +396,7 @@ def level(root):
             queue.append(node.left)
         if node.right != None:
             queue.append(node.right)
-        
 ```
-
-
 
 - 前序遍历
 
@@ -333,7 +430,6 @@ def middle(root):
         node = stack.pop()
         print node.val
         node = node.right
-        
 ```
 
 - 后序遍历
@@ -543,79 +639,19 @@ if __name__ == '__main__':
     tree.later_stack(tree.root)
 ```
 
+## leetcode
+
+1. leetcode 100 相同树[link](#100. Same Tree)
+2. Leetcode101. 对称树[link](#101. Symmetric Tree)
+3. Leetcode 102 层次遍历二叉树[link](#102. Binary Tree Level Order Traversal)
+4. Leetcode 103 Z字宽度遍历二叉树[link](#103. Binary Tree Zigzag Level Order Traversal)
+5. leetcode 104 树的最大深度 [link](# 104. Maximum Depth of Binary Tree)
+6. Leetcode 107 与102类似 [link](#107. Binary Tree Level Order Traversal II)
+
 ## 剑指 offer
 
-### 面试题6：重建二叉树
-
-题目描述：
-
-输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
-
-思路：
-
-采用递归的方法：通过切片的方式来获取左子节点和右子节点集合。
-
-```python
-class TreeNode:
-    def __init__(self,x):
-        self.val = x
-        self.left = None
-        self.right = None
-class Solution:
-    def reConstructBinaryTree(self, pre, tin)
-        if pre == None:
-            return None
-        if len(pre) == 1:
-            return TreeNode(pre[0])
-        else:
-            #通过逐一返回根节点的方法来构建二叉树
-            res = TreeNode(pre[0])
-            root = tin.index(pre[0])
-            res.left = self.reConstructBinaryTree(pre[1:root+1], tin[:root])
-            res.right = self.reConstructBinaryTree(pre[root+1:], tin[root+1:])
-        return res
-```
-
-### 面试题18 树的字结构
-
-题目描述：
-
-输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
-
-思路：
-
-本题可以分为两步，第一步：找到A中与B的根结点值相等的结点R，第二步：判断以R为根结点的子树是否包含B一样的结构。本题思路不难，但是需要格外注意对指针空值的判断。
-
-```python
-class TreeNode:
-    def __init__(self,x):
-        self.val = x
-        self.left = None
-        self.right =None
-class Solution:
-    def HasSubTree(self, root1, root2):
-        result = False
-        if root1 and root2:
-            if root1.val == root2.val:
-                result = self.iseuqual(root1,root2)
-            if not result:
-                result = self.HasSubTree(root1.left, root2)
-            if not result:
-                result = self.HasSubTree(root1.right, root2)
-                
-        return result
-    
-    def iseuqual(self, root1, root2):
-        if not root1:
-            return False
-        if not root2:
-            return True
-        if root1.val != root2.val:
-            return False
-        return self.iseuqual(root1.left, root2.left) and iseuqual(root1.right, root2.right)
-```
-
-链接：<https://blog.csdn.net/qq_20141867/article/details/81067253>
+1. 面试题6：重建二叉树[link](#面试题6：重建二叉树)
+2. 面试题18： 树的字结构 [link](#面试题18 树的字结构)
 
 # 数组
 
@@ -793,6 +829,35 @@ l.deleteElem(4)
 l.traveList()
 ```
 
+## 常见问题
+
+1. 链表反转
+
+```python
+class Node:
+    def __init__(self,data=None,next = None):
+        self.data = data
+        self.next = next
+
+def reverse(link):
+    pre = link
+    cur = link.next
+    pre.next = None
+    while cur:
+        temp = cur.next
+        cur.next = pre
+        pre = cur
+        cur = temp
+    return pre
+
+if __name__ == '__main__':
+    link = Node(1, Node(2, Node(3, Node(4, Node(5, Node(6, Node(7, Node(8, Node(9)))))))))
+    root = reverse(link)
+    while root:
+        print(root.data)
+        root =root.next
+```
+
 ## leetcode
 
 1. Merge Two Sorted Lists
@@ -856,6 +921,414 @@ class Solution(object):
         return all_max
 ```
 
+### 62. Unique Paths
+
+原题：https://leetcode.com/problems/unique-paths/
+
+解题思路：https://blog.csdn.net/L141210113/article/details/88823381
+
+题意：从左上角到右下角有多少条路径
+
+题目分析：
+
+这一题是以及经典的动态规划入门题，可以建立二维数组解决，它每一个点的路径数与左边和上面的点路径数相关。
+解题思路：
+看下面这个图从左上出发，向右有一条路径，向下有一条路径，到右下可以先向右走再过去或者先向下走再过去，2 = 1 + 1。
+
+```python
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        arr = [[0]*m]*n
+        for i in range(n):
+            for j in range(m):
+                if i==0 or j==0:
+                    arr[i][j] = 1
+                else:
+                    arr[i][j] = arr[i-1][j] + arr[i][j-1]
+                    
+        return arr[n-1][m-1]
+```
+
+### 63. Unique Paths II
+
+原题：https://leetcode.com/problems/unique-paths-ii/
+
+解题：https://blog.csdn.net/fuxuemingzhu/article/details/83154114
+
+题意：
+
+给出了一个m * n的地图，上面有个机器人位于左上角，现在他想到达右下角。但是这个地图某些位置可能有障碍物。它每次只能向右边或者下边走一步，问能到达右下角的方式有多少种。
+
+思路：动态规划
+第一行第一列的所有方式只有1种，到达其他位置的方式是这个位置上面 + 这个位置左边用DP的话，注意需要判断某个位置是不是有障碍物，如果有障碍物，那么到达这个地方的方法是0。总体思路和上面记忆化搜索差不多。
+
+时间复杂度是O(m * n)，空间复杂度是O(m * n)。
+
+```python
+class Solution(object):
+    def uniquePathsWithObstacles(self, obstacleGrid):
+        """
+        :type obstacleGrid: List[List[int]]
+        :rtype: int
+        """
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+        
+        arr = [[0]*(n+1)]*(m+1)
+        for i in range(1,m+1):
+            for j in range(1,n+1):
+                if obstacleGrid[i-1][j-1]==1:
+                    arr[i][j] = 0
+                else:
+                    if i == j == 1:
+                        arr[i][j] = 1
+                    else:
+                        arr[i][j] = arr[i-1][j] + arr[i][j-1]
+        
+        return arr[m][n]
+```
+
+### 64. Minimum Path Sum
+
+原题：https://leetcode.com/problems/minimum-path-sum/
+
+解题：https://blog.csdn.net/fuxuemingzhu/article/details/82620422
+
+题意：
+
+求一个矩阵从左上角到右下角的最短路径和。
+
+思路：动态规划（DP）
+
+从左上角开始到某个点的最短路径一定等于其上方、左方最短路径+当前的值。因此写成双重循环即可。
+
+这个算法的时间啊复杂度是O(m * n)，空间复杂度是O(m * n)。
+
+```python
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]: return 0
+        m, n = len(grid), len(grid[0])
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    before = 0
+                elif i == 0:
+                    before = grid[i][j-1]
+                elif j == 0:
+                    before = grid[i-1][j]
+                else:
+                    before = min(grid[i-1][j], grid[i][j-1])
+                grid[i][j] = before + grid[i][j]
+        return grid[m-1][n-1]
+```
+
+
+
+### 100. Same Tree
+
+原题：https://leetcode.com/problems/same-tree/
+
+解题：https://www.cnblogs.com/loadofleaf/p/5502249.html
+
+题意：
+
+判断两个二叉树是否相同
+
+思路：
+
+递归，逐一遍历，判断是否相同。
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+        if p == None and q == None:
+            return True
+        if p != None and q == None:
+            return False
+        if p == None and q != None:
+            return False
+        if p.val != q.val:
+            return False
+        
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+```
+
+
+
+### 101. Symmetric Tree
+
+原题：https://leetcode.com/problems/symmetric-tree/
+
+解题：https://blog.csdn.net/coder_orz/article/details/51579528
+
+题意：
+
+给定一个二叉树，判断它是否是自己的镜像（中心对称）。
+
+思路方法
+
+**思路一**：递归
+
+递归，对于每个节点，检查树的左右节点值是否相等，同时判断：左节点的左子树和右节点的右子树是否对称、右节点的左子树和左节点的右子树是否对称。
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+        return self.mirror(root.left, root.right)
+    def mirror(self, left, right):
+        if not left or not right:
+            return left == right
+        if left.val != right.val:
+            return False
+        return self.mirror(left.left, right.right) and self.mirror(left.right, right.left)
+```
+
+**思路二**：深度优先搜索
+
+非递归算法。算是将上面的递归方法改写成非递归方法，实际上是深度优先搜索（DFS）。
+
+```python 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        stackl, stackr = [root.left], [root.right]
+        while len(stackl) > 0 and len(stackr) > 0:
+            left = stackl.pop()
+            right = stackr.pop()
+            if not left and not right:
+                continue
+            elif not left or not right:
+                return False
+            if left.val != right.val:
+                return False
+            stackl.append(left.left)
+            stackl.append(left.right)
+            stackr.append(right.right)
+            stackr.append(right.left)
+        return len(stackl) == 0 and len(stackr) == 0
+```
+
+### 102. Binary Tree Level Order Traversal
+
+原题链接：https://leetcode.com/problems/binary-tree-level-order-traversal/
+
+解题：https://blog.csdn.net/fuxuemingzhu/article/details/79616156
+
+题意：层次遍历二叉树
+
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        node = root
+        myQueue = []
+        res = []
+        if root == None:
+            return myQueue
+        myQueue.append(root)
+        while myQueue:
+            level = []
+            for i in range(len(myQueue)):
+                node = myQueue.pop(0)
+                level.append(node.val)
+                if node.left != None:
+                    myQueue.append(node.left)
+                if node.right != None:
+                    myQueue.append(node.right)
+            res.append(level)
+        
+        return res
+```
+
+### 103. Binary Tree Zigzag Level Order Traversal
+
+原题链接：https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+
+解题：https://www.cnblogs.com/chruny/p/5251462.html
+
+题意：
+
+Z字宽度遍历树。
+
+思路：
+
+这题可以用比较取巧的方法。首先获得宽度遍历的结果，然后将第二层的翻转就可以了。
+
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        node = root
+        myQueue = []
+        res = []
+        if root == None:
+            return res
+        myQueue.append(node)
+        key = -1
+        while myQueue:
+            level = []
+            
+            for i in range(len(myQueue)):
+                node = myQueue.pop(0)
+                level.append(node.val)
+                if node.left != None:
+                    myQueue.append(node.left)
+                if node.right != None:
+                    myQueue.append(node.right)
+            if key == -1:
+                res.append(level)
+                key = 1
+            elif key == 1:
+                res.append(level[::-1])
+                key = -1
+            
+        return res
+```
+
+
+
+### 104. Maximum Depth of Binary Tree
+
+原文链接：https://blog.csdn.net/IT_job/article/details/80224403
+
+要求：
+
+给定一个二叉树，找出其最大深度。
+
+二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+
+说明: 叶子节点是指没有子节点的节点。
+
+示例：
+给定二叉树 [3,9,20,null,null,15,7]，
+
+​    3
+
+   / \
+  9  20
+    /  \
+   15   7
+返回它的最大深度 3 。
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        
+        if root == None:
+            return 0
+        else:
+            l = 1 + self.maxDepth(root.left)
+            r = 1 + self.maxDepth(root.right)
+            return max(l,r)
+```
+
+### 107. Binary Tree Level Order Traversal II
+
+原题链接：https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+
+解题：https://blog.csdn.net/coder_orz/article/details/51583729
+
+题意：
+
+给定一个二叉树，返回其从下到上的层序遍历（从左到右，从下到上）
+
+思路：
+
+这道题实际上完全可以先得到从上到下的层序遍历，再逆序结果，但这样就没意思了，所以应该尝试避免reverse操作。不过方法还是类似的。 
+相关问题：[102. Binary Tree Level Order Traversal [easy\] 
+
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def levelOrderBottom(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        res = []
+        node = root
+        if root == None:
+            return res
+        myQueue = []
+        myQueue.append(node)
+        while myQueue:
+            level = []
+            for i in range(len(myQueue)):
+                node = myQueue.pop(0)
+                level.append(node.val)
+                if node.left != None:
+                    myQueue.append(node.left)
+                if node.right != None:
+                    myQueue.append(node.right)
+            res.append(level)
+            
+        return res[::-1]
+```
+
+
+
 ### 128. 最长连续序列
 
 https://leetcode-cn.com/problems/longest-consecutive-sequence/
@@ -895,6 +1368,48 @@ def longestConsecutive(nums):
         maxlength = max(maxlength, hash_dict[key]） 
     return maxlength                
 ```
+
+### 179. Largest Number
+
+原题：https://leetcode.com/problems/largest-number/
+
+解题：https://www.jianshu.com/p/960cf375c40a
+
+题意：
+
+将已知整数数组组成最大的数字，以字符串的形式输出。
+
+思路：
+
+关键点就在于，如何对比两个数的大小？（理解为两个数谁应该放在前面），解法是按照顺序拼接两个字母串进行比较，如果a ＋b串 大于 b＋a串，那么a比较大（即题意中理解的a应该放在前面），反之b比较大。
+
+```python
+class Solution:
+    def smaller(self, a, b):
+        strA = str(a) + str(b)
+        strB = str(b) + str(a)
+        if strA > strB:
+            return False
+        else:
+            return True
+    
+    def largestNumber(self, nums: List[int]) -> str:
+        
+        res = ''
+        for i in range(len(nums)):
+            for j in range(i, len(nums)):
+                if self.smaller(nums[i], nums[j]):
+                    temp = nums[i]
+                    nums[i] = nums[j]
+                    nums[j] = temp
+        for val in nums:
+            res += str(val)
+        if res[0] == '0':
+            return '0'
+        return res
+```
+
+
 
 ### 224. Basic Calculator
 
@@ -1040,3 +1555,76 @@ class Solution(object):
         return True
 ```
 
+# 剑指 offer
+
+### 面试题6：重建二叉树
+
+题目描述：
+
+输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+
+思路：
+
+采用递归的方法：通过切片的方式来获取左子节点和右子节点集合。
+
+```python
+class TreeNode:
+    def __init__(self,x):
+        self.val = x
+        self.left = None
+        self.right = None
+class Solution:
+    def reConstructBinaryTree(self, pre, tin)
+        if pre == None:
+            return None
+        if len(pre) == 1:
+            return TreeNode(pre[0])
+        else:
+            #通过逐一返回根节点的方法来构建二叉树
+            res = TreeNode(pre[0])
+            root = tin.index(pre[0])
+            res.left = self.reConstructBinaryTree(pre[1:root+1], tin[:root])
+            res.right = self.reConstructBinaryTree(pre[root+1:], tin[root+1:])
+        return res
+```
+
+### 面试题18 树的字结构
+
+题目描述：
+
+输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+
+思路：
+
+本题可以分为两步，第一步：找到A中与B的根结点值相等的结点R，第二步：判断以R为根结点的子树是否包含B一样的结构。本题思路不难，但是需要格外注意对指针空值的判断。
+
+```python
+class TreeNode:
+    def __init__(self,x):
+        self.val = x
+        self.left = None
+        self.right =None
+class Solution:
+    def HasSubTree(self, root1, root2):
+        result = False
+        if root1 and root2:
+            if root1.val == root2.val:
+                result = self.iseuqual(root1,root2)
+            if not result:
+                result = self.HasSubTree(root1.left, root2)
+            if not result:
+                result = self.HasSubTree(root1.right, root2)
+                
+        return result
+    
+    def iseuqual(self, root1, root2):
+        if not root1:
+            return False
+        if not root2:
+            return True
+        if root1.val != root2.val:
+            return False
+        return self.iseuqual(root1.left, root2.left) and self.iseuqual(root1.right, root2.right)
+```
+
+链接：<https://blog.csdn.net/qq_20141867/article/details/81067253>

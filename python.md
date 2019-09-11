@@ -804,7 +804,7 @@ print(e)
 - 所有的键值都相同，或者赋予初始值
 
 ```python
- f=dict.fromkeys(['height','weight'],'normal')
+f=dict.fromkeys(['height','weight'],'normal')
 print(f)      
 #输出：{'weight': 'normal', 'height': 'normal'}
 ```
