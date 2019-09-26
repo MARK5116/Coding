@@ -860,9 +860,9 @@ if __name__ == '__main__':
 
 ## leetcode
 
-1. Merge Two Sorted Lists
+1. 21.合并两个有序的链表[link](#21. Merge Two Sorted Lists)
 
-234. 回文链表[link](#234.Palindrome Linked List)
+234. 234.回文链表[link](#234.Palindrome Linked List)
 
 # 哈希表（Hash table）
 
@@ -875,6 +875,41 @@ python中的这些东西都是哈希原理：字典(dictionary)、集合(set)、
 - leetcode：128.
 
 # leetcode
+
+### 21. Merge Two Sorted Lists
+
+原题：https://leetcode.com/problems/merge-two-sorted-lists/
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        if not l1 and not l2:
+            return None
+        result = ListNode(0)
+        node = result
+        while l1 and l2:
+            if l1.val <= l2.val:
+                node.next = l1
+                l1 = l1.next
+            else:
+                node.next = l2
+                l2 = l2.next
+            node = node.next
+        if l1:
+            node.next = l1
+        else:
+            node.next = l2
+        
+        return result.next
+```
+
+
 
 ### 53. Maximum Subarray
 
