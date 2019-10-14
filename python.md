@@ -2,7 +2,26 @@
 
 ## 浅拷贝／深拷贝
 
-<https://www.runoob.com/w3cnote/python-understanding-dict-copy-shallow-or-deep.html>
+https://www.runoob.com/w3cnote/python-understanding-dict-copy-shallow-or-deep.html
+
+理解复制/浅拷贝/深拷贝之间的区别以及实际效果。
+
+```python
+import copy
+a = {1:[1,2,3]}
+c = a.copy()
+d = copy.deepcopy(a)
+b = a
+b[1].append(4)
+
+b[2] = [1,2,3]
+print(a)     #{1: [1, 2, 3, 4], 2: [1, 2, 3]}
+print(b)     #{1: [1, 2, 3, 4], 2: [1, 2, 3]}
+print(c)     #{1: [1, 2, 3, 4]}
+print(d)     #{1: [1, 2, 3]}
+```
+
+
 
 ## 数据格式转换
 
