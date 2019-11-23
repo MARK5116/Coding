@@ -1285,6 +1285,48 @@ Vim中的光标键是h, j, k, l，要在各个屏间切换，只需要先按一�
 
 ctrl+tab
 
+### 搜索
+
+实现：`?<search_string>`
+
+举例：`?python`        （搜索关键字python）
+
+如果我们想要转到下一个/上一个搜索结果，请使用以下按键：
+
+- n – 寻找下一个匹配结果
+- N – 寻找上一个匹配结果
+
+注意：在使用上述按键之前，请不要忘记按 Enter 键。否则，搜索词将会被改变！
+
+### 字符串替换
+
+命令结构：`:<range> s/<search_string>/<replace_string>/<modifier>`
+
+- range - 定义执行“查找和替换”函数的范围，有两个不同的值
+
+- - ％ - 对整个文件执行
+  - < start _line > < end_line > - 在一组特定的行上面执行操作
+
+- search_string - 需要替换的字符串
+
+- replace_string - 替换旧字符串的新字符串
+
+- modifier - 确定替换行为，有几个不同的值
+
+- - g - 全局替换
+  - gc - 在每次更换之前要求确认
+  - gn - 忽略替换功能并突出显示查找结果。
+
+举例：
+
+1. 对整个文本，将python替换成python3
+
+`:%s/python/python3/g`
+
+2. 将100-200行文件中的python替换成python3
+
+`:100,200 s/python/python3/g`
+
 # git命令
 
 **git init**
